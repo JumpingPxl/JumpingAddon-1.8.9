@@ -1,0 +1,180 @@
+{
+  "gommehd": [
+    {
+      "definition": "lobby",
+      "name": "Lobby",
+      "prefix": null,
+      "minigame": false
+    },
+    {
+      "definition": "premiumlobby",
+      "name": "PremiumLobby",
+      "prefix": null,
+      "minigame": false
+    },
+    {
+      "definition": "silentlobby",
+      "name": "SilentLobby",
+      "prefix": null,
+      "minigame": false
+    },
+    {
+      "definition": "gommunity",
+      "name": "Gommunity",
+      "prefix": "",
+      "minigame": false
+    },
+    {
+      "definition": "replay",
+      "name": "Replay",
+      "prefix": "",
+      "minigame": false
+    },
+    {
+      "definition": "cloud",
+      "name": "Cloud",
+      "prefix": "",
+      "minigame": false
+    },
+    {
+      "definition": "skyblock",
+      "name": "SkyBlock",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "skywars",
+      "name": "SkyWars",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "bedwars",
+      "name": "BedWars",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "training",
+      "name": "Training",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "cores",
+      "name": "Cores",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "ttt",
+      "name": "TTT",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "survivalgames",
+      "name": "SurvivalGames",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "gungame",
+      "name": "GunGame",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "cookies",
+      "name": "Cookies",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "speeduhc",
+      "name": "SpeedUHC",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "jl",
+      "name": "JumpLeague",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "masterbuilders",
+      "name": "MasterBuilders",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "ragemode",
+      "name": "RageMode",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "aurapvp",
+      "name": "AuraPlus",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "auraclassic",
+      "name": "AuraClassic",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "endergames",
+      "name": "EnderGames",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "quicksurvivalgames",
+      "name": "QSG",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "soup",
+      "name": "SoupFFA",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "hardcore",
+      "name": "HardcoreFFA",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "classic",
+      "name": "ClassicFFA",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "conquest",
+      "name": "Conquest",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "kit1vs1",
+      "name": "Kit 1vs1",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "game1vs1",
+      "name": "Game 1vs1",
+      "prefix": "",
+      "minigame": true
+    }
+  ],
+  "timolia": [],
+  "rewinside": []
+}

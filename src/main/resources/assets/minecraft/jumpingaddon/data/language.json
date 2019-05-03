@@ -1,0 +1,158 @@
+{
+  "prefix": "§7[§cJumpingAddon§7] §r",
+  "language": [
+    {
+      "memberName": "Deutsch",
+      "messages": [
+        {
+          "memberName": "moduleFriendQuickInvite",
+          "message": "{0} §7in eine Party einladen"
+        },
+        {
+          "memberName": "modulePlayerQuickAnswer",
+          "message": "{0} §7antworten"
+        },
+        {
+          "memberName": "commandUsage",
+          "message": "%prefix §cBenutze: §7{0}"
+        },
+        {
+          "memberName": "actionHelp",
+          "message": "%prefix §7Befehle des §6Action §7Commands:\n%prefix §e{0} list §7Liste alle Actions auf\n%prefix §e{0} get §7Liste die Konfigurationen auf\n%prefix §e{0} add §7Füge eine Action hinzu\n%prefix §e{0} set §7Setze die Optionen einer Action\n%prefix §e{0} remove §7Lösche eine Action\n%prefix §e{0} toggle §7(De)Aktiviere den Status einer Action"
+        },
+        {
+          "memberName": "actionListActions",
+          "message": "%prefix §eActions: {0}"
+        },
+        {
+          "memberName": "actionListNoActions",
+          "message": "%prefix §eActions: §cKeine Actions gefunden."
+        },
+        {
+          "memberName": "actionGetNoAction",
+          "message": "%prefix §4Fehler: §cEs existiert keine Action mit dem Namen §e{0}§c"
+        },
+        {
+          "memberName": "actionGetInfos",
+          "message": "%prefix §6Informationen zur Action §c{0}§6:\n%prefix §7Aktiviert: {1}\n%prefix §7CheckType {2}\n%prefix §7CheckMessage: {3}\n%prefix §7Response: {4}\n%prefix §7Delay: {5}"
+        },
+        {
+          "memberName": "actionAddAdded",
+          "message": "%prefix §7Die Action §e{0} §7wurde erstellt. Konfiguriere sie mit §c{1} set§7, um die Action nutzen zu können."
+        },
+        {
+          "memberName": "actionAddAlreadyExists",
+          "message": "%prefix §4Fehler: §cEine Action mit dem Namen §e{0} §cexistiert bereits."
+        },
+        {
+          "memberName": "actionSetCheckMessageSuccess",
+          "message": "%prefix §7Die §aCheckMessage §7für die Action §e{0} §7wurde auf §e{1} §7gesetzt. Speichern mit §c{2} set {0} config"
+        },
+        {
+          "memberName": "actionSetCheckTypeNotExists",
+          "message": "%prefix §4Fehler: §cDer CheckType §e{0} §cexestiert nicht."
+        },
+        {
+          "memberName": "actionSetCheckTypeSuccess",
+          "message": "%prefix §7Der §aCheckType §7für die Action §e{0} §7wurde auf §e{1} §7gesetzt. Speichern mit §c{2} set {0} config"
+        },
+        {
+          "memberName": "actionSetResponseSuccess",
+          "message": "%prefix §7Die §aResponse-Nachricht §7für die Action §e{0} §7wurde auf §e{1} §7gesetzt. Speichern mit §c{2} set {0} config"
+        },
+        {
+          "memberName": "actionSetDelayNotInRange",
+          "message": "%prefix §4Fehler: §cDer Delay muss zwischen 0 und 30 Sekunden liegen."
+        },
+        {
+          "memberName": "actionSetDelayNoNumber",
+          "message": "%prefix §4Fehler: §e{0} §cist keine Zahl."
+        },
+        {
+          "memberName": "actionSetDelaySuccess",
+          "message": "%prefix §7Der §aDelay §7für die Action §e{0} §7wurde auf §e{1} §7gesetzt. Speichern mit §c{2} set {0} config"
+        },
+        {
+          "memberName": "actionSetConfigNoAction",
+          "message": "%prefix §4Fehler: §cDu hast noch keine Action Namens §e{0} §ckonfiguriert."
+        },
+        {
+          "memberName": "actionSetConfigMustConfigure",
+          "message": "%prefix §4Fehler: §cUm die Aktion §e{0} §czu speichern, musst du sie noch fertig konfigurieren.\n%prefix  §cFehlende Punke: {1} §8- §cKonfiguriere mit §e{2} set"
+        },
+        {
+          "memberName": "actionSetConfigSuccess",
+          "message": "%prefix §7Die Action §e{0} §7wurde erfolgreich gespeichert. Alle Einstellungen wurden übernommen."
+        },
+        {
+          "memberName": "actionRemoveConfirm",
+          "message": "%prefix §cBist du sicher, dass die die Action Namens §e{0} §clöschen möchtest? Bestätige mit §4{1} remove {0} confirm"
+        },
+        {
+          "memberName": "actionRemoveSuccess1",
+          "message": "%prefix §7Die Action mit dem Namen §e{0} §7wurde erfolgreich gelöscht."
+        },
+        {
+          "memberName": "actionRemoveSuccess2",
+          "message": "%prefix §7Die noch nicht fertig konfigurierte Action Namens §e{0} §7wurde erfolgreich verworfen."
+        },
+        {
+          "memberName": "actionToggleDeactivated",
+          "message": "%prefix §7Die Action mit dem Namen §e{0} §7wurde §cdeaktiviert§7."
+        },
+        {
+          "memberName": "actionToggleActivated",
+          "message": "%prefix §7Die Action mit dem Namen §e{0} §7wurde §aaktiviert§7."
+        },
+        {
+          "memberName": "randomkillReportNotInTTT",
+          "message": "%prefix §4Fehler: §cDu musst dich in dem Spielmodi §4TTT §cbefinden, um §e{0} §cbenutzen zu können!"
+        },
+        {
+          "memberName": "ticketNotInTTT",
+          "message": "%prefix §4Fehler: §cDu musst dich in dem Spielmodi §4TTT §cbefinden, um §e{0} §cbenutzen zu können!"
+        },
+        {
+          "memberName": "ticketAlreadyIngame",
+          "message": "%prefix §4Fehler: §cDu bist bereits Ingame!"
+        },
+        {
+          "memberName": "ticketDetective",
+          "message": "%prefix §7Falls vorhanden, wird dein §9Detective§e-Ticket §7eine Sekunde vor Rundenstart eingelöst."
+        },
+        {
+          "memberName": "ticketTraitor",
+          "message": "%prefix §7Falls vorhanden, wird dein §4Traitor§e-Ticket §7eine Sekunde vor Rundenstart eingelöst."
+        },
+        {
+          "memberName": "partyNoParty",
+          "message": "%prefix §4Fehler: §cDu hast in deiner aktuellen Sitzung noch keinen Party-Invite erhalten."
+        },
+        {
+          "memberName": "partyNoFriend",
+          "message": "%prefix §4Fehler: §cEs ist in deiner aktuellen Sitzung noch kein Freund Online gekommen."
+        },
+        {
+          "memberName": "quickShopNotInTTT",
+          "message": "%prefix §4Fehler: §cDu musst dich in dem Spielmodi §4TTT §cbefinden, um §e{0} §cbenutzen zu können!"
+        },
+        {
+          "memberName": "quickShopNotInRange",
+          "message": "%prefix §4Fehler: §cDer Shortcut muss eine Zahl von §e1 bis 10 §csein."
+        },
+        {
+          "memberName": "quickShopInnocent",
+          "message": "%prefix §4Fehler: §cDu kannst als §aInnocent §cden Shop nicht benutzen."
+        },
+        {
+          "memberName": "quickShopNotIngame",
+          "message": "%prefix §4Fehler: §cUm den Shop zu benutzen, musst du Ingame sein."
+        },
+        {
+          "memberName": "checkTTTQuickReportHover",
+          "message": "{0} §7für Randomkilling reporten"
+        }
+      ]
+    }
+  ]
+}

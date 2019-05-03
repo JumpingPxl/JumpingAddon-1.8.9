@@ -1,0 +1,156 @@
+package de.jumpingpxl.jumpingaddon.util.mods;
+
+import de.jumpingpxl.jumpingaddon.JumpingAddon;
+import de.jumpingpxl.jumpingaddon.util.Task;
+import de.jumpingpxl.jumpingaddon.util.libraries.discordrpc.DiscordRPC;
+import de.jumpingpxl.jumpingaddon.util.libraries.discordrpc.DiscordRichPresence;
+import de.jumpingpxl.jumpingaddon.util.serversupport.ServerSupportHandler;
+import net.labymod.main.Source;
+import net.labymod.utils.ServerData;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author Nico (JumpingPxl) Middendorf
+ * @date 03.03.2019
+ */
+
+public class DiscordRPCModule {
+
+	private JumpingAddon jumpingAddon;
+	private String state;
+	private String details;
+	private boolean initialized;
+	private long lastAction = 0;
+
+	public DiscordRPCModule(JumpingAddon jumpingAddon) {
+		this.jumpingAddon = jumpingAddon;
+	}
+
+	public void load() {
+		toggleStatus(jumpingAddon.getSettings().getDiscord().getAsBoolean());
+		new Task(() -> {
+			if (jumpingAddon.getSettings().getDiscord().getAsBoolean() && initialized) {
+				DiscordRPC.discordRunCallbacks();
+				update(getDefaultPresence());
+			}
+		}).repeat(2500, TimeUnit.MILLISECONDS);
+	}
+
+	private void initialize() {
+		DiscordRPC.discordInitialize("502122710864756736", null, true);
+		initialized = true;
+	}
+
+	public void toggleStatus(boolean value) {
+		if (value)
+			enable();
+		else
+			disable();
+	}
+
+	public void toggleSmallIconStatus(boolean value) {
+		update(getDefaultPresence());
+	}
+
+	public void toggleTimeStampStatus(boolean value) {
+		update(getDefaultPresence());
+	}
+
+	public void setState(DiscordRichPresence presence, String state) {
+		this.state = state;
+		if (presence != null)
+			presence.state = state;
+	}
+
+	public void setDetails(DiscordRichPresence presence, String details) {
+		this.details = details;
+		if (presence != null)
+			presence.details = details;
+	}
+
+	public void setGameType(ServerSupportHandler.GameType gameType) {
+		DiscordRichPresence presence = getDefaultPresence();
+		StringBuilder stringBuilder = new StringBuilder();
+		if (jumpingAddon.getConnection().isAfk())
+			stringBuilder.append("Idle ");
+		else
+			stringBuilder.append("Playing ");
+		if (gameType == null)
+			stringBuilder.append("on Unknown");
+		else {
+			if (!gameType.isMiniGame()) {
+				stringBuilder.append("on ");
+				if (gameType.getPrefix() == null)
+					stringBuilder.append("a ");
+			} else if (jumpingAddon.getConnection().isAfk())
+				stringBuilder.append("on ");
+			stringBuilder.append(gameType.getName());
+		}
+		setState(presence, jumpingAddon.getConnection().isSupported() ? stringBuilder.toString() : null);
+		update(presence);
+	}
+
+	public void setIdle(boolean value) {
+		if (jumpingAddon.getConnection().getGameType() != null)
+			setGameType(jumpingAddon.getConnection().getGameType());
+		else {
+			DiscordRichPresence presence = getDefaultPresence();
+			setState(presence, value ? "Idle " : "Ingame ");
+			update(presence);
+		}
+	}
+
+	public void connectToServer(ServerData serverData) {
+		lastAction = System.currentTimeMillis();
+		DiscordRichPresence presence = getDefaultPresence();
+		setDetails(presence, "on " + serverData.getIp() + (serverData.getPort() == 25565 ? "" : ":" + serverData.getPort()));
+		setState(presence, "Ingame");
+		update(presence);
+	}
+
+	public void disconnectFromServer() {
+		lastAction = 0L;
+		DiscordRichPresence presence = getDefaultPresence();
+		setDetails(presence, "Ingame Menu");
+		setState(presence, null);
+		update(presence);
+	}
+
+	private void update(DiscordRichPresence presence) {
+		if (jumpingAddon.getSettings().getDiscord().getAsBoolean())
+			DiscordRPC.discordUpdatePresence(presence);
+	}
+
+	private void enable() {
+		if (!initialized)
+			initialize();
+		update(getDefaultPresence());
+	}
+
+	private void disable() {
+		if (!initialized)
+			return;
+		DiscordRPC.discordShutdown();
+		initialized = false;
+	}
+
+	private DiscordRichPresence getDefaultPresence() {
+		DiscordRichPresence presence = new DiscordRichPresence();
+		presence.largeImageKey = "icon";
+		presence.largeImageText = "Playing Minecraft " + jumpingAddon.getMinecraftVersion();
+		if (jumpingAddon.getSettings().getDiscordSmallIcon().getAsBoolean()) {
+			presence.smallImageKey = "labymod";
+			presence.smallImageText = "Using the LabyMod v" + Source.ABOUT_VERSION + " with JumpingAddon v" + jumpingAddon.getVersion();
+		} else
+			presence.largeImageText += " using the LabyMod v" + Source.ABOUT_VERSION + " with JumpingAddon v" + jumpingAddon.getVersion();
+		if (this.details != null)
+			presence.details = this.details;
+		else
+			setDetails(presence, "Ingame Menu");
+		presence.state = this.state;
+		if (jumpingAddon.getSettings().getDiscordTimeStamp().getAsBoolean())
+			presence.startTimestamp = lastAction;
+		return presence;
+	}
+}
