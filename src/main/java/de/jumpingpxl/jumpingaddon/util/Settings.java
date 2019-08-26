@@ -41,7 +41,6 @@ public class Settings {
 	private String prefix = "§7[§cJumpingAddon§7] §r";
 	private List<SettingValue> settingValues = new ArrayList<>();
 	private double updateAvailable = -1.0D;
-	@Setter
 	private ChatComponent startupNotification;
 
 	@Setter
@@ -153,7 +152,7 @@ public class Settings {
 				if (jumpingAddon.getVersion() < version) {
 					jumpingAddon.log("[JumpingAddon] New version found: v" + version);
 					updateAvailable = version;
-					setStartupNotification(new ChatComponent("[%prefix$$]§cA new version is available. Download JumpingAddon v" + version).append(new ChatComponent(" §4§lHERE").setClickEvent(ClickEvent.Action.OPEN_URL, "http://file.jumpingpxl.de/projects/jumpingaddon/JumpingAddon_1-8-9.jar")));
+					setStartupNotification(new ChatComponent("[%prefix$$]§cA new version is available. Download JumpingAddon v" + version).append(new ChatComponent(" §4§lHERE").setClickEvent(ClickEvent.Action.OPEN_URL, "https://jumpingpxl.github.io/jumpingaddon/JumpingAddon_1-8-9.jar")));
 				} else
 					jumpingAddon.log("[JumpingAddon] No new version found.");
 			} catch (IOException e) {
@@ -165,13 +164,15 @@ public class Settings {
 	public JsonObject getJsonObjectFromUrl(String fileName, JsonObject jsonObject) throws IOException {
 		InputStreamReader inputStreamReader;
 		try {
-			URLConnection urlConnection = new URL("http://file.jumpingpxl.de/projects/jumpingaddon/" + fileName).openConnection();
+			URLConnection urlConnection = new URL("https://jumpingpxl.github.io/jumpingaddon/" + fileName).openConnection();
 			urlConnection.setRequestProperty("User-Agent", Source.getUserAgent());
 			urlConnection.setReadTimeout(5000);
 			urlConnection.setConnectTimeout(5000);
 			urlConnection.connect();
 			inputStreamReader = new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8);
+			System.out.println("[JumpingAddon] Successfully downloaded the file " + fileName);
 		} catch (IOException e) {
+			System.out.println("[JumpingAddon] An error occurred while loading the file " + fileName);
 			if (jsonObject != null)
 				return jsonObject;
 			else
@@ -189,6 +190,15 @@ public class Settings {
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("assets/minecraft/jumpingaddon/data/" + fileName);
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 		return (JsonObject) new JsonParser().parse(inputStreamReader);
+	}
+
+	public void setStartupNotification(ChatComponent chatComponent){
+		if(chatComponent == null)
+			startupNotification = null;
+		else if(startupNotification == null)
+			startupNotification = chatComponent;
+		else
+			startupNotification = chatComponent.append(startupNotification.setText("\n" + startupNotification.getFormattedText()));
 	}
 
 	@Getter

@@ -58,11 +58,9 @@ public class JumpingAddonCommand implements CommandExecutor {
 						jumpingAddon.displayPrefixMessage("§7Gametype reload complete.");
 						break;
 				}
-		else if (args[0].equalsIgnoreCase("test")) {
-			//Minecraft.getMinecraft().getNetHandler().handleChat(new S02PacketChat(new ChatComponentText("§4TEST"), (byte) 2));
-			User user = LabyMod.getInstance().getUserManager().getUser(UUID.randomUUID());
-			user.setSubTitle("SubTitle Text");
-			user.setSubTitleSize(0.8D);
+		else if (args[0].equalsIgnoreCase("debug")) {
+			jumpingAddon.setDebug(!jumpingAddon.isDebug());
+			jumpingAddon.displayPrefixMessage("§7Debug-Mode " + (jumpingAddon.isDebug() ? "§a" : "§cde") + "activated");
 		}
 		return true;
 	}

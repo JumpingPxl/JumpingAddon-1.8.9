@@ -12,7 +12,6 @@ import net.labymod.utils.ServerData;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 
 import java.util.List;
 
@@ -34,8 +33,6 @@ public class Connection {
 	private GommeHDSupport gommeHD;
 	@Setter
 	private String lastActionMessage;
-	@Setter
-	private IChatComponent lastKickMessage = new ChatComponentText("");
 
 	public Connection(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -52,7 +49,7 @@ public class Connection {
 	}
 
 	public ServerSupport getSupport() {
-		return server == null ? null : Server.getSupportMap().get(Server.GOMMEHD_NET);
+		return server == null ? null : Server.getSupportMap().get(server);
 	}
 
 	public void setAfk(boolean value) {
@@ -92,11 +89,16 @@ public class Connection {
 					gameType[0] = gameTypes;
 					break;
 				}
-		})) {
+		}))
 			gameType[0] = new ServerSupportHandler.GameType("", "Unknown", "", false);
-		}
 		jumpingAddon.getEventHandler().getGameTypeUpdateListener().onGameTypeUpdate(jumpingAddon.getConnection().getServer(), gameType[0], jumpingAddon.getConnection().getGameType());
 		return gameType[0];
+	}
+
+	public ServerSupportHandler.GameType getGameType() {
+		if (gameType == null)
+			return new ServerSupportHandler.GameType("", "Unknown", "", false);
+		return gameType;
 	}
 
 	public boolean playerExists(String name) {

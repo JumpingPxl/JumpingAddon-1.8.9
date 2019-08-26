@@ -4,18 +4,20 @@ import com.google.gson.JsonObject;
 import de.jumpingpxl.jumpingaddon.util.*;
 import de.jumpingpxl.jumpingaddon.util.command.CommandHandler;
 import de.jumpingpxl.jumpingaddon.util.event.EventHandler;
-import de.jumpingpxl.jumpingaddon.util.gui.GuiEditorHandler;
 import de.jumpingpxl.jumpingaddon.util.languaging.LanguageHandler;
 import de.jumpingpxl.jumpingaddon.util.mods.ModuleHandler;
 import de.jumpingpxl.jumpingaddon.util.modules.IngameModuleHandler;
 import de.jumpingpxl.jumpingaddon.util.serversupport.ServerSupportHandler;
 import de.jumpingpxl.jumpingaddon.util.transformer.TransformHandler;
 import lombok.Getter;
+import lombok.Setter;
 import net.labymod.api.LabyModAddon;
 import net.labymod.core.LabyModCore;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
+import net.minecraft.tileentity.TileEntitySign;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
@@ -30,7 +32,11 @@ import java.util.List;
 @Getter
 public class JumpingAddon extends LabyModAddon {
 
-	private double version = 1.0;
+	private double version = 1.3;
+	@Setter
+	private boolean debug;
+	@Setter
+	private boolean createdConfig;
 
 	@Getter
 	private static JumpingAddon instance;
@@ -51,7 +57,6 @@ public class JumpingAddon extends LabyModAddon {
 	private StringUtils stringUtils;
 	private ServerSupportHandler serverSupportHandler;
 	private LanguageHandler languageHandler;
-	private GuiEditorHandler guiEditorHandler;
 
 	@Override
 	public void onEnable() {
@@ -70,7 +75,6 @@ public class JumpingAddon extends LabyModAddon {
 		eventHandler = new EventHandler(this).registerListener();
 		commandHandler = new CommandHandler(this).registerCommands();
 		ingameModuleHandler = new IngameModuleHandler(this).registerIngameModules();
-		//guiEditorHandler = new GuiEditorHandler(this).load();
 		TransformHandler.setJumpingAddon(this);
 		loadConfiguration();
 	}
@@ -103,6 +107,15 @@ public class JumpingAddon extends LabyModAddon {
 	public void loadConfiguration() {
 		Configuration.getConfigurationList().forEach(Configuration::load);
 		settings.loadConfig();
+	}
+
+	public TileEntitySignRenderer getCustomSignRenderer() {
+		return new TileEntitySignRenderer() {
+			public void renderTileEntityAt(TileEntitySign tileEntitySign, double x, double y, double z, float partialTicks, int destroyStage) {
+				eventHandler.getRenderSignListener().onRenderSign(tileEntitySign, x, y, z, partialTicks, destroyStage);
+				super.renderTileEntityAt(tileEntitySign, x, y, z, partialTicks, destroyStage);
+			}
+		};
 	}
 
 	public JsonObject getLabyModConfig() {

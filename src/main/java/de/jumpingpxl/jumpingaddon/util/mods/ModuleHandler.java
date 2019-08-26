@@ -16,6 +16,7 @@ public class ModuleHandler {
 	private ActionModule actionModule;
 	private DiscordRPCModule discordRPCModule;
 	private HitBoxModule hitBoxModule;
+	private SignSearchModule signSearchModule;
 
 	public ModuleHandler(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -26,6 +27,7 @@ public class ModuleHandler {
 		actionModule = new ActionModule(jumpingAddon);
 		discordRPCModule = new DiscordRPCModule(jumpingAddon);
 		hitBoxModule = new HitBoxModule(jumpingAddon);
+		signSearchModule = new SignSearchModule(jumpingAddon);
 		return this;
 	}
 }

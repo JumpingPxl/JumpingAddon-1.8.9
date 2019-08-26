@@ -4,6 +4,7 @@ import de.jumpingpxl.jumpingaddon.JumpingAddon;
 import net.labymod.api.events.RenderEntityEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntitySign;
 
 /**
  * @author Nico (JumpingPxl) Middendorf

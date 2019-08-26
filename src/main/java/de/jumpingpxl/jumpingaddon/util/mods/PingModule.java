@@ -4,6 +4,7 @@ import de.jumpingpxl.jumpingaddon.JumpingAddon;
 import net.labymod.core.LabyModCore;
 import net.labymod.main.LabyMod;
 import net.labymod.user.User;
+import net.labymod.user.group.EnumGroupDisplayType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -54,7 +55,7 @@ public class PingModule {
 		double distance = getDistanceSq(entity, LabyModCore.getMinecraft().getPlayer());
 		User user = LabyMod.getInstance().getUserManager().getUsers().get(entity.getUniqueID());
 		float maxNameTagHeight = user == null || !LabyMod.getSettings().cosmetics ? 0 : user.getMaxNameTagHeight();
-		String displayRank = user == null || !user.getRank().isRender() || !user.isRankVisible() ? null : user.getRank().buildTag();
+		String displayRank = user == null || user.getGroup().getDisplayType() != EnumGroupDisplayType.ABOVE_HEAD ? null : user.getGroup().getDisplayName();
 		y += (double) (LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F);
 		y += maxNameTagHeight;
 		if (distance < 100.0D) {

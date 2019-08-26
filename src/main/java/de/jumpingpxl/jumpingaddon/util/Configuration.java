@@ -158,8 +158,7 @@ public class Configuration {
 		private void loadConfig(JsonObject defaultValue) {
 			if (!file.getParentFile().exists())
 				file.getParentFile().mkdir();
-			boolean createdNewFile = !file.exists();
-			if (createdNewFile) {
+			if (!file.exists()) {
 				try {
 					file.createNewFile();
 					Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
@@ -167,6 +166,7 @@ public class Configuration {
 					writer.flush();
 					writer.close();
 					configuration = defaultValue;
+					JumpingAddon.getInstance().setCreatedConfig(true);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

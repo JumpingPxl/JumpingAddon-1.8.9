@@ -2,6 +2,7 @@ package de.jumpingpxl.jumpingaddon.util.modules;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
 import net.labymod.core.LabyModCore;
+import net.labymod.gui.ModGuiMultiplayer;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
@@ -115,7 +116,7 @@ public class AfkTimerInGameModule extends SimpleModule implements InGameModule {
 				int currentMouseX = Mouse.getX();
 				int currentMouseY = Mouse.getY();
 				long currentMillis = System.currentTimeMillis();
-				if (!(!(this.lastMouseX == currentMouseX && this.lastMouseY == currentMouseY) && (currentGui == null || ((currentGui instanceof GuiChat || currentGui instanceof GuiChest) || ((currentGui instanceof GuiInventory))))) && LabyModCore.getMinecraft().getPlayer().moveForward == 0.0F && LabyModCore.getMinecraft().getPlayer().fallDistance == 0.0F) {
+				if (!(!(this.lastMouseX == currentMouseX && this.lastMouseY == currentMouseY) && (currentGui == null || ((currentGui instanceof GuiChat || currentGui instanceof GuiChest) || ((currentGui instanceof GuiInventory || currentGui instanceof ModGuiMultiplayer))))) && LabyModCore.getMinecraft().getPlayer().moveForward == 0.0F && LabyModCore.getMinecraft().getPlayer().fallDistance == 0.0F) {
 					if (jumpingAddon.getConnection().isAfk()) {
 						if (++this.currentTick >= 20) {
 							this.currentTick = 0;

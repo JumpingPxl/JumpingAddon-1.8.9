@@ -18,9 +18,6 @@ public class QuitServerListener {
 	}
 
 	public Consumer<ServerData> onQuitServer() {
-		return serverData -> {
-			System.out.println("disconnected");
-			jumpingAddon.getConnection().disconnect();
-		};
+		return serverData -> jumpingAddon.getConnection().disconnect();
 	}
 }

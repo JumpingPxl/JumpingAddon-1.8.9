@@ -12,7 +12,6 @@ import java.util.List;
  * @date 02.03.2019
  */
 @Getter
-@Setter
 public class SettingValue {
 
 	private Configuration configuration;
@@ -39,6 +38,13 @@ public class SettingValue {
 		this.configPath = configPath;
 		this.defaultVar = defaultValue;
 		list.add(this);
+	}
+
+	public SettingValue(Configuration configuration, String configPath, Object defaultValue) {
+		this.configuration = configuration;
+		this.configPath = configPath;
+		this.defaultVar = defaultValue;
+		JumpingAddon.getInstance().getSettings().getSettingValues().add(this);
 	}
 
 	public boolean getAsBoolean() {

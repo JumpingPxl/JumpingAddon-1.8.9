@@ -15,6 +15,7 @@ public class EventHandler {
 	private JumpingAddon jumpingAddon;
 	private MessageSendListener messageSendListener;
 	private GameTypeUpdateListener gameTypeUpdateListener;
+	private RenderSignListener renderSignListener;
 
 	public EventHandler(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -31,8 +32,10 @@ public class EventHandler {
 		jumpingAddon.getApi().getEventManager().registerOnIncomingPacket(new PacketReceiveListener(jumpingAddon).onPacketReceive());
 		jumpingAddon.getApi().getEventManager().registerOnQuit(new QuitServerListener(jumpingAddon).onQuitServer());
 		jumpingAddon.getApi().getEventManager().register(new RenderEntityListener(jumpingAddon));
+		jumpingAddon.getApi().registerForgeListener(new RenderWorldLastListener(jumpingAddon));
 		jumpingAddon.getApi().getEventManager().register(new TabListUpdateListener(jumpingAddon));
 		gameTypeUpdateListener = new GameTypeUpdateListener(jumpingAddon);
+		renderSignListener = new RenderSignListener(jumpingAddon);
 		return this;
 	}
 }

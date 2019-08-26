@@ -49,6 +49,12 @@
       "minigame": true
     },
     {
+      "definition": "fsw",
+      "name": "Fun-SkyWars",
+      "prefix": "",
+      "minigame": true
+    },
+    {
       "definition": "bedwars",
       "name": "BedWars",
       "prefix": "",
@@ -68,6 +74,18 @@
     },
     {
       "definition": "ttt",
+      "name": "TTT",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "ettt12",
+      "name": "TTT",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "ettt16",
       "name": "TTT",
       "prefix": "",
       "minigame": true
@@ -140,19 +158,19 @@
     },
     {
       "definition": "soup",
-      "name": "SoupFFA",
+      "name": "Soup-FFA",
       "prefix": "",
       "minigame": true
     },
     {
       "definition": "hardcore",
-      "name": "HardcoreFFA",
+      "name": "Hardcore-FFA",
       "prefix": "",
       "minigame": true
     },
     {
       "definition": "classic",
-      "name": "ClassicFFA",
+      "name": "Classic-FFA",
       "prefix": "",
       "minigame": true
     },
@@ -164,13 +182,13 @@
     },
     {
       "definition": "kit1vs1",
-      "name": "Kit 1vs1",
+      "name": "Kit-1vs1",
       "prefix": "",
       "minigame": true
     },
     {
       "definition": "game1vs1",
-      "name": "Game 1vs1",
+      "name": "Game-1vs1",
       "prefix": "",
       "minigame": true
     }

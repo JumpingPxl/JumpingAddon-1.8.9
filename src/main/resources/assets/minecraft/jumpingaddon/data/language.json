@@ -1,5 +1,4 @@
 {
-  "prefix": "§7[§cJumpingAddon§7] §r",
   "language": [
     {
       "memberName": "Deutsch",
@@ -151,8 +150,53 @@
         {
           "memberName": "checkTTTQuickReportHover",
           "message": "{0} §7für Randomkilling reporten"
+        },
+        {
+          "memberName": "discordIdle",
+          "message": "Idle "
+        },
+        {
+          "memberName": "discordIdleOn",
+          "message": "on "
+        },
+        {
+          "memberName": "discordIngame",
+          "message": "Ingame "
+        },
+        {
+          "memberName": "discordPlaying",
+          "message": "Playing "
+        },
+        {
+          "memberName": "discordPlayingOn",
+          "message": "on "
+        },
+        {
+          "memberName": "discordPlayingOnA",
+          "message": "a "
+        },
+        {
+          "memberName": "discordPlayingUnknown",
+          "message": "on Unknown"
+        },
+        {
+          "memberName": "discordMenu",
+          "message": "Ingame Menu"
+        },
+        {
+          "memberName": "discordLargeImage",
+          "message": "Playing Minecraft {0}"
+        },
+        {
+          "memberName": "discordLargeAddition",
+          "message": " using the LabyMod v{0} with JumpingAddon v{1}"
+        },
+        {
+          "memberName": "discordSmallImage",
+          "message": "Using the LabyMod v{0} with JumpingAddon v{1}"
         }
       ]
     }
-  ]
+  ],
+  "prefix": "§7[§cJumpingAddon§7] §r"
 }

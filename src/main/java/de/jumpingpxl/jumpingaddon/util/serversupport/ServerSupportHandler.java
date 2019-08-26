@@ -131,17 +131,16 @@ public class ServerSupportHandler {
 		}
 
 		public boolean matches(String message, Consumer<String> consumer) {
-			String string = null;
+			boolean found = false;
 			for (Pattern pattern : messages) {
 				Matcher matcher = pattern.matcher(message.replace("§r", ""));
-				if (matcher.find()) {
-					string = matcher.group();
-					break;
+				while (matcher.find()) {
+					found = true;
+					if (consumer != null)
+						consumer.accept(matcher.group());
 				}
 			}
-			if (string != null && consumer != null)
-				consumer.accept(string);
-			return string != null;
+			return found;
 		}
 
 		public boolean matches(SettingValue settingValue, String message, Consumer<String> consumer) {

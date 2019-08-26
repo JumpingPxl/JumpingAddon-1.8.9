@@ -107,10 +107,12 @@ public class GommeHDSupport implements ServerSupport {
 			}
 		});
 		partyInviteCheck.matches(formatted, string -> {
-			String player = jumpingAddon.getStringUtils().stripColor(string);
-			lastPartyInvite = player;
-			if (settings.partyAutoAccept.getAsBoolean() && (settings.partyAutoAcceptPlayers.getAsString().isEmpty() || Arrays.asList(settings.partyAutoAcceptPlayers.getAsString().split(";")).contains(player)))
-				jumpingAddon.sendMessage("/party accept " + player);
+			if(settings.partyAutoAcceptAfk.getAsBoolean() || !jumpingAddon.getConnection().isAfk()) {
+				String player = jumpingAddon.getStringUtils().stripColor(string);
+				lastPartyInvite = player;
+				if (settings.partyAutoAccept.getAsBoolean() && (settings.partyAutoAcceptPlayers.getAsString().isEmpty() || Arrays.asList(settings.partyAutoAcceptPlayers.getAsString().split(";")).contains(player)))
+					jumpingAddon.sendMessage("/party accept " + player);
+			}
 		});
 		messageSenderCheck.matches(settings.playerQuickAnswer, formatted, string -> {
 			String[] args = string.split(" ");
@@ -124,7 +126,7 @@ public class GommeHDSupport implements ServerSupport {
 		reportCheck.matches(unformatted, string -> {
 			settings.reports.setValue(settings.reports.getAsInteger() + 1);
 			settings.reports.getConfiguration().set(settings.reports.getConfigPath(), settings.reports.getAsInteger());
-			settings.	reports.getConfiguration().save();
+			settings.reports.getConfiguration().save();
 		});
 		nickedCheck.matches(unformatted, string -> nickName = string);
 		unnickedCheck.matches(unformatted, string -> nickName = null);
@@ -192,17 +194,22 @@ public class GommeHDSupport implements ServerSupport {
 	@Override
 	public ServerSupportHandler.GameType handleGameType(String unformatted) {
 		ServerSupportHandler.GameType[] gameType = {null};
-		String gameTypeString;
-		if (!gameTypeCheck.matches(unformatted, string -> {
-			for (ServerSupportHandler.GameType gameTypes : gameTypes)
-				if (gameTypes.getDefinition().equalsIgnoreCase(string.replace(" ", ""))) {
-					gameType[0] = gameTypes;
-					break;
-				}
-			if (gameType[0] == null)
-				gameType[0] = new ServerSupportHandler.GameType("", string.replace(" ", ""), "", true);
-		}))
+		try {
+			String gameTypeString;
+			if (!gameTypeCheck.matches(unformatted, string -> {
+				for (ServerSupportHandler.GameType gameTypes : gameTypes)
+					if (gameTypes.getDefinition().equalsIgnoreCase(string.replace(" ", ""))) {
+						gameType[0] = gameTypes;
+						break;
+					}
+				if (gameType[0] == null)
+					gameType[0] = new ServerSupportHandler.GameType("", string, "", false);
+			}))
+				gameType[0] = new ServerSupportHandler.GameType("", "Unknown", "", false);
+		} catch (Exception e){
+			e.printStackTrace();
 			gameType[0] = new ServerSupportHandler.GameType("", "Unknown", "", false);
+		}
 		jumpingAddon.getEventHandler().getGameTypeUpdateListener().onGameTypeUpdate(jumpingAddon.getConnection().getServer(), gameType[0], jumpingAddon.getConnection().getGameType());
 		return gameType[0];
 	}
@@ -217,6 +224,7 @@ public class GommeHDSupport implements ServerSupport {
 				new BetterListContainerElement("Auto party accept", new ControlElement.IconData(Material.CHEST)).addSettings(getServer().getName(),
 						new BetterBooleanElement("Enabled", new ControlElement.IconData(Material.LEVER), settings.partyAutoAccept),
 						new HeaderElement(""),
+						new BetterBooleanElement("While AFK", new ControlElement.IconData(Material.LEVER), settings.partyAutoAcceptAfk),
 						new BetterStringElement("Players", new ControlElement.IconData(Material.PAPER), settings.partyAutoAcceptPlayers)
 				),
 				new HeaderElement(""),
@@ -250,6 +258,7 @@ public class GommeHDSupport implements ServerSupport {
 		private SettingValue friendQuickInvite;
 		private SettingValue playerQuickAnswer;
 		private SettingValue partyAutoAccept;
+		private SettingValue partyAutoAcceptAfk;
 		private SettingValue partyAutoAcceptPlayers;
 		private SettingValue tttRoleTitle;
 		private SettingValue tttQuickReport;
@@ -267,10 +276,10 @@ public class GommeHDSupport implements ServerSupport {
 			friendQuickInvite = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledFriendQuickInvite", true);
 			playerQuickAnswer = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledPlayerQuickAnswer", true);
 			partyAutoAccept = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledPartyAutoAccept", false);
+			partyAutoAcceptAfk = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledPartyAutoAcceptAfk", false);
 			partyAutoAcceptPlayers = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "partyAutoAcceptPlayers", "");
 			tttRoleTitle = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledTTTRoleTitle", true);
 			tttQuickReport = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "enabledTTTQuickReport", true);
-
 			reports = new SettingValue(jumpingAddon.getSettings().getSettingValues(), configuration, "reports", 0);
 		}
 	}

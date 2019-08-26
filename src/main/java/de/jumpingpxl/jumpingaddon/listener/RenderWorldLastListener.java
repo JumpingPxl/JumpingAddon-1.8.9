@@ -1,6 +1,8 @@
 package de.jumpingpxl.jumpingaddon.listener;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * @author Nico (JumpingPxl) Middendorf
@@ -13,5 +15,9 @@ public class RenderWorldLastListener {
 
 	public RenderWorldLastListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
+	}
+
+	@SubscribeEvent
+	public void onWorldRender(RenderWorldLastEvent event){
 	}
 }

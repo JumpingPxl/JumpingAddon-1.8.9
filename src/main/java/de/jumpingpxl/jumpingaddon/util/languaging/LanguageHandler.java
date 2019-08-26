@@ -61,6 +61,8 @@ public class LanguageHandler {
 	}
 
 	public String getMessage(String message, String... replace) {
+		if(messages.isEmpty())
+			return "";
 		String language = jumpingAddon.getSettings().getLanguage().getAsString();
 		if (!languages.contains(language)) {
 			jumpingAddon.getSettings().getLanguage().setValue("Deutsch");

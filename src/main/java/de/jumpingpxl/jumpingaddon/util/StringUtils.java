@@ -1,6 +1,7 @@
 package de.jumpingpxl.jumpingaddon.util;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
+import net.labymod.utils.ModColor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

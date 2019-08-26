@@ -73,18 +73,18 @@ public class DiscordRPCModule {
 		DiscordRichPresence presence = getDefaultPresence();
 		StringBuilder stringBuilder = new StringBuilder();
 		if (jumpingAddon.getConnection().isAfk())
-			stringBuilder.append("Idle ");
+			stringBuilder.append(jumpingAddon.getMessage("discordIdle"));
 		else
-			stringBuilder.append("Playing ");
+			stringBuilder.append(jumpingAddon.getMessage("discordPlaying"));
 		if (gameType == null)
-			stringBuilder.append("on Unknown");
+			stringBuilder.append(jumpingAddon.getMessage("discordPlayingUnknown"));
 		else {
 			if (!gameType.isMiniGame()) {
-				stringBuilder.append("on ");
+				stringBuilder.append(jumpingAddon.getMessage("discordPlayingOn"));
 				if (gameType.getPrefix() == null)
-					stringBuilder.append("a ");
+					stringBuilder.append(jumpingAddon.getMessage("discordPlayingOnA"));
 			} else if (jumpingAddon.getConnection().isAfk())
-				stringBuilder.append("on ");
+				stringBuilder.append(jumpingAddon.getMessage("discordIdleOn"));
 			stringBuilder.append(gameType.getName());
 		}
 		setState(presence, jumpingAddon.getConnection().isSupported() ? stringBuilder.toString() : null);
@@ -96,7 +96,7 @@ public class DiscordRPCModule {
 			setGameType(jumpingAddon.getConnection().getGameType());
 		else {
 			DiscordRichPresence presence = getDefaultPresence();
-			setState(presence, value ? "Idle " : "Ingame ");
+			setState(presence, value ? jumpingAddon.getMessage("discordIdle") : jumpingAddon.getMessage("discordIngame"));
 			update(presence);
 		}
 	}
@@ -104,15 +104,15 @@ public class DiscordRPCModule {
 	public void connectToServer(ServerData serverData) {
 		lastAction = System.currentTimeMillis();
 		DiscordRichPresence presence = getDefaultPresence();
-		setDetails(presence, "on " + serverData.getIp() + (serverData.getPort() == 25565 ? "" : ":" + serverData.getPort()));
-		setState(presence, "Ingame");
+		setDetails(presence,jumpingAddon.getMessage("discordPlayingOn") + serverData.getIp() + (serverData.getPort() == 25565 ? "" : ":" + serverData.getPort()));
+		setState(presence, jumpingAddon.getMessage("discordIngame"));
 		update(presence);
 	}
 
 	public void disconnectFromServer() {
 		lastAction = 0L;
 		DiscordRichPresence presence = getDefaultPresence();
-		setDetails(presence, "Ingame Menu");
+		setDetails(presence, jumpingAddon.getMessage("discordMenu"));
 		setState(presence, null);
 		update(presence);
 	}
@@ -138,16 +138,16 @@ public class DiscordRPCModule {
 	private DiscordRichPresence getDefaultPresence() {
 		DiscordRichPresence presence = new DiscordRichPresence();
 		presence.largeImageKey = "icon";
-		presence.largeImageText = "Playing Minecraft " + jumpingAddon.getMinecraftVersion();
+		presence.largeImageText = jumpingAddon.getMessage("discordLargeImage", jumpingAddon.getMinecraftVersion());
 		if (jumpingAddon.getSettings().getDiscordSmallIcon().getAsBoolean()) {
 			presence.smallImageKey = "labymod";
-			presence.smallImageText = "Using the LabyMod v" + Source.ABOUT_VERSION + " with JumpingAddon v" + jumpingAddon.getVersion();
+			presence.smallImageText = jumpingAddon.getMessage("discordSmallImage", Source.ABOUT_VERSION, String.valueOf(jumpingAddon.getVersion()));
 		} else
-			presence.largeImageText += " using the LabyMod v" + Source.ABOUT_VERSION + " with JumpingAddon v" + jumpingAddon.getVersion();
+			presence.largeImageText += jumpingAddon.getMessage("discordLargeAddition", Source.ABOUT_VERSION, String.valueOf(jumpingAddon.getVersion()));
 		if (this.details != null)
 			presence.details = this.details;
 		else
-			setDetails(presence, "Ingame Menu");
+			setDetails(presence, jumpingAddon.getMessage("discordMenu"));
 		presence.state = this.state;
 		if (jumpingAddon.getSettings().getDiscordTimeStamp().getAsBoolean())
 			presence.startTimestamp = lastAction;

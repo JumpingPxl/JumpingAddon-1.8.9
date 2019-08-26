@@ -25,9 +25,6 @@ public class PacketReceiveListener {
 				S02PacketChat packet = (S02PacketChat) object;
 				if (packet.getType() == 2)
 					jumpingAddon.getConnection().setLastActionMessage(packet.getChatComponent().getFormattedText());
-			} else if (object instanceof S40PacketDisconnect){
-				S40PacketDisconnect packet = (S40PacketDisconnect) object;
-				jumpingAddon.getConnection().setLastKickMessage(packet.getReason());
 			}
 		};
 	}
