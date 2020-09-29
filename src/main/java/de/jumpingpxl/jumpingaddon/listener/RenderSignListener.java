@@ -10,13 +10,14 @@ import net.minecraft.tileentity.TileEntitySign;
 
 public class RenderSignListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public RenderSignListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
 	}
 
-	public void onRenderSign(TileEntitySign tileEntitySign, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void onRenderSign(TileEntitySign tileEntitySign, double x, double y, double z,
+	                         float partialTicks, int destroyStage) {
 		jumpingAddon.getModuleHandler().getSignSearchModule().renderTileEntitySign(tileEntitySign);
 	}
 }

@@ -1,6 +1,7 @@
 package de.jumpingpxl.jumpingaddon.util.command;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
+import de.jumpingpxl.jumpingaddon.util.StringUtil;
 import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
 import net.labymod.main.LabyMod;
 
@@ -10,6 +11,11 @@ import net.labymod.main.LabyMod;
  */
 
 public interface CommandExecutor {
+
+	static CommandHandler.Command getCommand(JumpingAddon jumpingAddon, String label) {
+		return jumpingAddon.getCommandHandler().getCommand(label);
+	}
+
 	boolean execute(CommandHandler.Command command, String label, String[] args);
 
 	Server getServer();
@@ -23,14 +29,10 @@ public interface CommandExecutor {
 	}
 
 	default void sendString(String string) {
-		LabyMod.getInstance().displayMessageInChat(JumpingAddon.getInstance().getSettings().getPrefix() + string);
+		LabyMod.getInstance().displayMessageInChat(StringUtil.PREFIX + string);
 	}
 
-	default void send(String message, String... replace) {
-		JumpingAddon.getInstance().displayMessage(message, replace);
-	}
-
-	static CommandHandler.Command getCommand(JumpingAddon jumpingAddon, String label) {
-		return jumpingAddon.getCommandHandler().getCommand(label);
+	default void send(JumpingAddon jumpingAddon, String message, String... replace) {
+		jumpingAddon.displayMessage(message, replace);
 	}
 }

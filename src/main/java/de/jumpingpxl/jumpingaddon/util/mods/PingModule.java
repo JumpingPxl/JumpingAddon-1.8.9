@@ -32,9 +32,9 @@ import java.lang.reflect.Method;
 
 public class PingModule {
 
-	private JumpingAddon jumpingAddon;
-	private RenderManager renderManager;
-	private DamageIndicatorsWrapper damageIndicatorsWrapper;
+	private final JumpingAddon jumpingAddon;
+	private final RenderManager renderManager;
+	private final DamageIndicatorsWrapper damageIndicatorsWrapper;
 
 	public PingModule(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -43,32 +43,46 @@ public class PingModule {
 	}
 
 	public void render(Entity entity, double x, double y, double z) {
-		if (!jumpingAddon.getSettings().getPing().getAsBoolean())
+		if (!jumpingAddon.getSettings().getPing().getAsBoolean()) {
 			return;
-		if (!(entity instanceof EntityPlayer))
+		}
+		if (!(entity instanceof EntityPlayer)) {
 			return;
+		}
 		EntityPlayer entityplayer = (EntityPlayer) entity;
-		if (entityplayer.isSneaking() || entityplayer.isInvisible())
+		if (entityplayer.isSneaking() || entityplayer.isInvisible()) {
 			return;
-		if (LabyModCore.getMinecraft().getPlayer().equals(entityplayer))
+		}
+		if (LabyModCore.getMinecraft().getPlayer().equals(entityplayer)) {
 			return;
+		}
 		double distance = getDistanceSq(entity, LabyModCore.getMinecraft().getPlayer());
 		User user = LabyMod.getInstance().getUserManager().getUsers().get(entity.getUniqueID());
-		float maxNameTagHeight = user == null || !LabyMod.getSettings().cosmetics ? 0 : user.getMaxNameTagHeight();
-		String displayRank = user == null || user.getGroup().getDisplayType() != EnumGroupDisplayType.ABOVE_HEAD ? null : user.getGroup().getDisplayName();
-		y += (double) (LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F);
+		float maxNameTagHeight =
+				user == null || !LabyMod.getSettings().cosmetics ? 0 : user.getMaxNameTagHeight();
+		String displayRank =
+				user == null || user.getGroup().getDisplayType() != EnumGroupDisplayType.ABOVE_HEAD ? null
+						: user.getGroup().getDisplayName();
+		y += LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F;
 		y += maxNameTagHeight;
 		if (distance < 100.0D) {
 			Scoreboard scoreboard = LabyModCore.getMinecraft().getWorld().getScoreboard();
 			ScoreObjective scoreobjective = scoreboard.getObjectiveInDisplaySlot(2);
-			if (scoreobjective != null)
-				y += (double) (LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F);
-			if (displayRank != null)
+			if (scoreobjective != null) {
+				y += LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F
+						* 0.02666667F;
+			}
+			if (displayRank != null) {
 				y += 0.13f;
+			}
 		}
-		if (damageIndicatorsWrapper.isDamageIndicatorEnabled() && distance <= damageIndicatorsWrapper.getMaxDistance() && !Minecraft.getMinecraft().gameSettings.hideGUI)
-			y += (double) (LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F);
-		NetworkPlayerInfo playerInfo = LabyModCore.getMinecraft().getConnection().getPlayerInfo(entityplayer.getUniqueID());
+		if (damageIndicatorsWrapper.isDamageIndicatorEnabled()
+				&& distance <= damageIndicatorsWrapper.getMaxDistance()
+				&& !Minecraft.getMinecraft().gameSettings.hideGUI) {
+			y += LabyMod.getInstance().getDrawUtils().getFontRenderer().FONT_HEIGHT * 1.15F * 0.02666667F;
+		}
+		NetworkPlayerInfo playerInfo = LabyModCore.getMinecraft().getConnection().getPlayerInfo(
+				entityplayer.getUniqueID());
 		int ping = playerInfo != null ? playerInfo.getResponseTime() : -1;
 		if (ping > 0) {
 			String pingColor;
@@ -81,7 +95,11 @@ public class PingModule {
 			} else {
 				pingColor = "§4";
 			}
-			renderLivingLabel(entity, jumpingAddon.getSettings().getPingFormatting().getAsString('&').replace("%color%", pingColor).replace("%ping%", String.valueOf(ping)), x, y, z);
+			renderLivingLabel(entity, jumpingAddon.getSettings()
+					.getPingFormatting()
+					.getAsString('&')
+					.replace("%color%", pingColor)
+					.replace("%ping%", String.valueOf(ping)), x, y, z);
 		}
 	}
 
@@ -106,10 +124,10 @@ public class PingModule {
 		int j = fontrenderer.getStringWidth(label) / 2;
 		GlStateManager.disableTexture2D();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-		worldrenderer.pos((double) (-j - 1), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		worldrenderer.pos((double) (-j - 1), (double) (8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		worldrenderer.pos((double) (j + 1), (double) (8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		worldrenderer.pos((double) (j + 1), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		fontrenderer.drawString(label, -fontrenderer.getStringWidth(label) / 2, i, 553648127);
@@ -168,51 +186,63 @@ public class PingModule {
 		}
 
 		public void updateDamageIndicatorsState() {
-			if (this.notFoundDamageIndicator)
+			if (this.notFoundDamageIndicator) {
 				return;
-			if (damageIndicatorClass == null)
+			}
+			if (damageIndicatorClass == null) {
 				try {
-					this.damageIndicatorClass = Class.forName("net.labymod.addons.damageindicator.DamageIndicator");
+					this.damageIndicatorClass = Class.forName(
+							"net.labymod.addons.damageindicator.DamageIndicator");
 				} catch (ClassNotFoundException ex) {
-					if (++damageIndicatorTries >= 10)
+					if (++damageIndicatorTries >= 10) {
 						this.notFoundDamageIndicator = true;
+					}
 					return;
 				}
-			if (this.getInstanceMethod == null)
+			}
+			if (this.getInstanceMethod == null) {
 				try {
 					this.getInstanceMethod = damageIndicatorClass.getDeclaredMethod("getInstance");
 					getInstanceMethod.setAccessible(true);
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
 				}
-			if (this.isVisibleMethod == null)
+			}
+			if (this.isVisibleMethod == null) {
 				try {
 					this.isVisibleMethod = damageIndicatorClass.getDeclaredMethod("isVisible");
 					isVisibleMethod.setAccessible(true);
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
 				}
-			if (this.getDistanceMethod == null)
+			}
+			if (this.getDistanceMethod == null) {
 				try {
 					this.getDistanceMethod = damageIndicatorClass.getDeclaredMethod("getDistance");
 					getDistanceMethod.setAccessible(true);
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
 				}
-			if (this.allowedField == null)
+			}
+			if (this.allowedField == null) {
 				try {
 					this.allowedField = damageIndicatorClass.getDeclaredField("allowed");
 					allowedField.setAccessible(true);
 				} catch (NoSuchFieldException e) {
 					e.printStackTrace();
 				}
-			if (getInstanceMethod == null || isVisibleMethod == null || getDistanceMethod == null || allowedField == null)
+			}
+			if (getInstanceMethod == null || isVisibleMethod == null || getDistanceMethod == null
+					|| allowedField == null) {
 				return;
+			}
 			try {
 				Object instance = getInstanceMethod.invoke(null);
-				if (instance == null)
+				if (instance == null) {
 					return;
-				this.damageIndicatorEnabled = (Boolean) isVisibleMethod.invoke(instance) && (Boolean) allowedField.get(instance);
+				}
+				this.damageIndicatorEnabled = (Boolean) isVisibleMethod.invoke(instance)
+						&& (Boolean) allowedField.get(instance);
 				int distance = (Integer) getDistanceMethod.invoke(instance);
 				this.maxDistance = distance * distance;
 			} catch (IllegalAccessException | InvocationTargetException e) {

@@ -1,6 +1,7 @@
 package de.jumpingpxl.jumpingaddon.listener;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
+import de.jumpingpxl.jumpingaddon.util.StringUtil;
 import net.labymod.api.events.MessageReceiveEvent;
 
 /**
@@ -10,7 +11,7 @@ import net.labymod.api.events.MessageReceiveEvent;
 
 public class MessageReceiveListener implements MessageReceiveEvent {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public MessageReceiveListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -18,10 +19,13 @@ public class MessageReceiveListener implements MessageReceiveEvent {
 
 	@Override
 	public boolean onReceive(String formatted, String unformatted) {
-		if (!unformatted.startsWith(jumpingAddon.getStringUtils().stripColor(jumpingAddon.getSettings().getPrefix())))
+		if (!unformatted.startsWith(StringUtil.stripColor(StringUtil.PREFIX))) {
 			jumpingAddon.getModuleHandler().getActionModule().checkMessage(unformatted);
-		if (jumpingAddon.getConnection().getSupport() != null)
-			return jumpingAddon.getConnection().getSupport().handleReceivingMessage(formatted, unformatted);
+		}
+		if (jumpingAddon.getConnection().getSupport() != null) {
+			return jumpingAddon.getConnection().getSupport().handleReceivingMessage(formatted,
+					unformatted);
+		}
 		return false;
 	}
 }

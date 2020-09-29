@@ -1,11 +1,20 @@
 package de.jumpingpxl.jumpingaddon.util;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +24,12 @@ import java.util.List;
  * @date 06.03.2019
  */
 
-@Getter
 public class Configuration {
 
-	@Getter
-	private static List<Configuration> configurationList = new ArrayList<>();
-	private ConfigManager configManager;
-	private JsonObject config;
-	private JumpingAddon jumpingAddon;
+	private static final List<Configuration> configurationList = new ArrayList<>();
+	private final ConfigManager configManager;
+	private final JsonObject config;
+	private final JumpingAddon jumpingAddon;
 	private Configuration superConfiguration;
 	private String memberName;
 	private JsonObject jsonObject;
@@ -34,9 +41,12 @@ public class Configuration {
 		configurationList.add(this);
 	}
 
-	public Configuration(JumpingAddon jumpingAddon, String fileName, Configuration superConfiguration, String memberName) {
+	public Configuration(JumpingAddon jumpingAddon, String fileName,
+	                     Configuration superConfiguration,
+	                     String memberName) {
 		this.jumpingAddon = jumpingAddon;
-		this.configManager = fileName == null ? jumpingAddon.getConfigManager() : new ConfigManager(new File(jumpingAddon.getAddonFolder(), fileName));
+		this.configManager = fileName == null ? jumpingAddon.getConfigManager() : new ConfigManager(
+				new File(jumpingAddon.getAddonFolder(), fileName));
 		this.config = configManager.getJsonObject();
 		this.superConfiguration = superConfiguration;
 		this.memberName = memberName;
@@ -51,8 +61,13 @@ public class Configuration {
 		this(jumpingAddon, fileName, null, memberName);
 	}
 
-	public Configuration(JumpingAddon jumpingAddon, Configuration superConfiguration, String memberName) {
+	public Configuration(JumpingAddon jumpingAddon, Configuration superConfiguration,
+	                     String memberName) {
 		this(jumpingAddon, null, superConfiguration, memberName);
+	}
+
+	public static List<Configuration> getConfigurationList() {
+		return Configuration.configurationList;
 	}
 
 	public void load() {
@@ -63,8 +78,9 @@ public class Configuration {
 					configManager.save();
 				}
 				this.jsonObject = config.getAsJsonObject(memberName);
-			} else
+			} else {
 				this.jsonObject = config;
+			}
 		} else {
 			if (memberName != null) {
 				if (!superConfiguration.has(memberName)) {
@@ -72,15 +88,17 @@ public class Configuration {
 					configManager.save();
 				}
 				this.jsonObject = superConfiguration.get(memberName).getAsJsonObject();
-			} else
+			} else {
 				this.jsonObject = config;
+			}
 		}
 	}
 
 	public void addToConfig() {
 		if (superConfiguration == null) {
-			if (memberName != null)
+			if (memberName != null) {
 				config.add(memberName, jsonObject);
+			}
 		} else {
 			superConfiguration.set(memberName, jsonObject);
 			superConfiguration.addToConfig();
@@ -125,8 +143,9 @@ public class Configuration {
 	}
 
 	public boolean has(String memberName) {
-		if (jsonObject == null)
+		if (jsonObject == null) {
 			System.out.println(memberName);
+		}
 		return getRawJsonObject().has(memberName);
 	}
 
@@ -135,15 +154,40 @@ public class Configuration {
 	}
 
 	private JsonObject getRawJsonObject() {
-		if (jsonObject == null)
+		if (jsonObject == null) {
 			load();
+		}
 		return jsonObject;
 	}
 
+	public ConfigManager getConfigManager() {
+		return this.configManager;
+	}
+
+	public JsonObject getConfig() {
+		return this.config;
+	}
+
+	public JumpingAddon getJumpingAddon() {
+		return this.jumpingAddon;
+	}
+
+	public Configuration getSuperConfiguration() {
+		return this.superConfiguration;
+	}
+
+	public String getMemberName() {
+		return this.memberName;
+	}
+
+	public JsonObject getJsonObject() {
+		return this.jsonObject;
+	}
+
 	public static class ConfigManager {
-		private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		private File file;
-		@Setter
+
+		private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		private final File file;
 		private JsonObject configuration;
 
 		public ConfigManager(File file, JsonObject defaultValue) {
@@ -156,17 +200,18 @@ public class Configuration {
 		}
 
 		private void loadConfig(JsonObject defaultValue) {
-			if (!file.getParentFile().exists())
+			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdir();
+			}
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
-					Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+					Writer writer = new BufferedWriter(
+							new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 					writer.write(gson.toJson(defaultValue));
 					writer.flush();
 					writer.close();
 					configuration = defaultValue;
-					JumpingAddon.getInstance().setCreatedConfig(true);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -183,7 +228,8 @@ public class Configuration {
 
 		public void save() {
 			try {
-				Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+				Writer writer = new BufferedWriter(
+						new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 				writer.write(gson.toJson(configuration));
 				writer.flush();
 				writer.close();
@@ -198,6 +244,10 @@ public class Configuration {
 
 		public File getFile() {
 			return file;
+		}
+
+		public void setConfiguration(JsonObject configuration) {
+			this.configuration = configuration;
 		}
 	}
 }

@@ -8,6 +8,7 @@ import net.labymod.settings.elements.SettingsElement;
  */
 
 public interface BetterElement {
+
 	SettingsElement getElement();
 
 	default BetterElement setDescription(String description) {

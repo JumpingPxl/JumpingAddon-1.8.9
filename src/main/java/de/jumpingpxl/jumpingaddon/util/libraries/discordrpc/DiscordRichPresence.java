@@ -27,6 +27,8 @@ public class DiscordRichPresence extends Structure {
 
 	@Override
 	public List<String> getFieldOrder() {
-		return Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey", "largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax", "matchSecret", "joinSecret", "spectateSecret", "instance");
+		return Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey",
+				"largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax",
+				"matchSecret", "joinSecret", "spectateSecret", "instance");
 	}
 }

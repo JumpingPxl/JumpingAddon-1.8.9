@@ -15,8 +15,8 @@ import net.labymod.utils.Material;
 
 public class GommeNickNameInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
-	private GommeHDSupport gommeHDSupport;
+	private final JumpingAddon jumpingAddon;
+	private final GommeHDSupport gommeHDSupport;
 
 	public GommeNickNameInGameModule(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -40,7 +40,8 @@ public class GommeNickNameInGameModule extends SimpleModule implements InGameMod
 
 	@Override
 	public boolean isShown() {
-		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET) && gommeHDSupport.getNickName() != null;
+		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET)
+				&& gommeHDSupport.getNickName() != null;
 	}
 
 	@Override

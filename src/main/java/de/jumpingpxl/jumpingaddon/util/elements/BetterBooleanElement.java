@@ -17,13 +17,18 @@ import java.util.Arrays;
 
 public class BetterBooleanElement implements BetterElement {
 
-	private BooleanElement booleanElement;
+	private final BooleanElement booleanElement;
 
-	public BetterBooleanElement(String displayName, ControlElement.IconData iconData, boolean currentValue, Consumer<Boolean> updateValue) {
-		booleanElement = new BooleanElement(Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData, updateValue, currentValue);
+	public BetterBooleanElement(String displayName, ControlElement.IconData iconData,
+	                            boolean currentValue, Consumer<Boolean> updateValue) {
+		booleanElement = new BooleanElement(
+				Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData,
+				updateValue,
+				currentValue);
 	}
 
-	public BetterBooleanElement(String displayName, ControlElement.IconData iconData, SettingValue settingValue) {
+	public BetterBooleanElement(String displayName, ControlElement.IconData iconData,
+	                            SettingValue settingValue) {
 		this(displayName, iconData, settingValue.getAsBoolean(), enabled -> {
 			settingValue.setValue(enabled);
 			settingValue.getConfiguration().set(settingValue.getConfigPath(), enabled);
@@ -31,7 +36,8 @@ public class BetterBooleanElement implements BetterElement {
 		});
 	}
 
-	public BetterBooleanElement(String displayName, ControlElement.IconData iconData, SettingValue settingValue, Consumer<Boolean> updateValue) {
+	public BetterBooleanElement(String displayName, ControlElement.IconData iconData,
+	                            SettingValue settingValue, Consumer<Boolean> updateValue) {
 		this(displayName, iconData, settingValue.getAsBoolean(), enabled -> {
 			settingValue.setValue(enabled);
 			settingValue.getConfiguration().set(settingValue.getConfigPath(), enabled);
@@ -52,13 +58,21 @@ public class BetterBooleanElement implements BetterElement {
 	}
 
 	public BetterBooleanElement addSettings(Object... objects) {
-		if (objects.length == 0)
+		if (objects.length == 0) {
 			return this;
+		}
 		if (booleanElement.getSubSettings().getElements().isEmpty()) {
 			StringBuilder stringBuilder = new StringBuilder();
-			Arrays.stream(objects).filter(object -> object instanceof String).forEach(object -> stringBuilder.append(" §7» ").append(Settings.SettingsCategory.getLastCategory().getColor()).append(object));
-			stringBuilder.append(" §7» ").append(Settings.SettingsCategory.getLastCategory().getColor()).append(booleanElement.getDisplayName());
-			booleanElement.getSubSettings().add(new HeaderElement(Settings.SettingsCategory.getLastCategory().getCompleteName() + stringBuilder.toString()));
+			Arrays.stream(objects).filter(object -> object instanceof String).forEach(
+					object -> stringBuilder.append(" §7» ")
+							.append(Settings.SettingsCategory.getLastCategory().getColor())
+							.append(object));
+			stringBuilder.append(" §7» ")
+					.append(Settings.SettingsCategory.getLastCategory().getColor())
+					.append(booleanElement.getDisplayName());
+			booleanElement.getSubSettings().add(new HeaderElement(
+					Settings.SettingsCategory.getLastCategory().getCompleteName()
+							+ stringBuilder.toString()));
 		}
 		Arrays.stream(objects).forEach(object -> {
 			if (object instanceof BetterElement) {
@@ -69,5 +83,4 @@ public class BetterBooleanElement implements BetterElement {
 		});
 		return this;
 	}
-
 }

@@ -10,7 +10,7 @@ import net.labymod.api.events.MessageSendEvent;
 
 public class MessageSendListener implements MessageSendEvent {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public MessageSendListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;

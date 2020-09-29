@@ -1,9 +1,6 @@
 package de.jumpingpxl.jumpingaddon.util;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -11,40 +8,38 @@ import java.util.List;
  * @author Nico (JumpingPxl) Middendorf
  * @date 02.03.2019
  */
-@Getter
 public class SettingValue {
 
-	private Configuration configuration;
-	private String configPath;
-	private Object defaultVar;
-	@Getter(value = AccessLevel.NONE)
+	private final Configuration configuration;
+	private final String configPath;
+	private final Object defaultVar;
 	private Object value;
-	@Getter(value = AccessLevel.NONE)
 	private String stringValue = "";
-	@Getter(value = AccessLevel.NONE)
 	private int intValue = 0;
-	@Getter(value = AccessLevel.NONE)
 	private boolean booleanValue = false;
 
-	public SettingValue(List<SettingValue> list, String configPath, Object defaultValue) {
-		this.configuration = JumpingAddon.getInstance().getConfiguration();
+	public SettingValue(JumpingAddon jumpingAddon, List<SettingValue> list, String configPath,
+	                    Object defaultValue) {
+		this.configuration = jumpingAddon.getConfiguration();
 		this.configPath = configPath;
 		this.defaultVar = defaultValue;
 		list.add(this);
 	}
 
-	public SettingValue(List<SettingValue> list, Configuration configuration, String configPath, Object defaultValue) {
+	public SettingValue(JumpingAddon jumpingAddon, List<SettingValue> list,
+	                    Configuration configuration, String configPath, Object defaultValue) {
 		this.configuration = configuration;
 		this.configPath = configPath;
 		this.defaultVar = defaultValue;
 		list.add(this);
 	}
 
-	public SettingValue(Configuration configuration, String configPath, Object defaultValue) {
+	public SettingValue(JumpingAddon jumpingAddon, Configuration configuration, String configPath,
+	                    Object defaultValue) {
 		this.configuration = configuration;
 		this.configPath = configPath;
 		this.defaultVar = defaultValue;
-		JumpingAddon.getInstance().getSettings().getSettingValues().add(this);
+		jumpingAddon.getSettings().getSettingValues().add(this);
 	}
 
 	public boolean getAsBoolean() {
@@ -56,7 +51,7 @@ public class SettingValue {
 	}
 
 	public String getAsString(char altColorChar) {
-		return JumpingAddon.getInstance().getStringUtils().translateAlternateColorCodes(altColorChar, stringValue);
+		return StringUtil.translateAlternateColorCodes(altColorChar, stringValue);
 	}
 
 	public int getAsInteger() {
@@ -93,13 +88,42 @@ public class SettingValue {
 		}
 	}
 
+	public Configuration getConfiguration() {
+		return this.configuration;
+	}
+
+	public String getConfigPath() {
+		return this.configPath;
+	}
+
+	public Object getDefaultVar() {
+		return this.defaultVar;
+	}
+
+	public Object getValue() {
+		return this.value;
+	}
+
 	public void setValue(Object value) {
 		this.value = value;
-		if (defaultVar instanceof String)
+		if (defaultVar instanceof String) {
 			stringValue = String.valueOf(value);
-		else if (defaultVar instanceof Boolean)
+		} else if (defaultVar instanceof Boolean) {
 			booleanValue = Boolean.parseBoolean(String.valueOf(value));
-		else if (defaultVar instanceof Integer)
+		} else if (defaultVar instanceof Integer) {
 			intValue = Integer.valueOf(String.valueOf(value));
+		}
+	}
+
+	public String getStringValue() {
+		return this.stringValue;
+	}
+
+	public int getIntValue() {
+		return this.intValue;
+	}
+
+	public boolean isBooleanValue() {
+		return this.booleanValue;
 	}
 }

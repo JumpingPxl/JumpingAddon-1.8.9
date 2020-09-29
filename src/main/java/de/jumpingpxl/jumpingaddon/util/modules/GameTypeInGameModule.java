@@ -1,7 +1,6 @@
 package de.jumpingpxl.jumpingaddon.util.modules;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
-import lombok.Setter;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
@@ -13,8 +12,7 @@ import net.labymod.utils.Material;
  */
 public class GameTypeInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
-	@Setter
+	private final JumpingAddon jumpingAddon;
 	private boolean shown;
 
 	public GameTypeInGameModule(JumpingAddon jumpingAddon) {
@@ -39,6 +37,10 @@ public class GameTypeInGameModule extends SimpleModule implements InGameModule {
 	@Override
 	public boolean isShown() {
 		return shown;
+	}
+
+	public void setShown(boolean shown) {
+		this.shown = shown;
 	}
 
 	@Override

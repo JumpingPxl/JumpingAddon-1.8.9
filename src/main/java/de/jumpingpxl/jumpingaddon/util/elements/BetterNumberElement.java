@@ -16,15 +16,20 @@ import java.util.Arrays;
 
 public class BetterNumberElement implements BetterElement {
 
-	private NumberElement numberElement;
+	private final NumberElement numberElement;
 
-	public BetterNumberElement(String displayName, ControlElement.IconData iconData, int currentValue, int minValue, int maxValue, Consumer<Integer> updateValue) {
-		numberElement = new NumberElement(Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData, currentValue);
+	public BetterNumberElement(String displayName, ControlElement.IconData iconData,
+	                           int currentValue,
+	                           int minValue, int maxValue, Consumer<Integer> updateValue) {
+		numberElement = new NumberElement(
+				Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData,
+				currentValue);
 		numberElement.addCallback(updateValue);
 		numberElement.setRange(minValue, maxValue);
 	}
 
-	public BetterNumberElement(String displayName, ControlElement.IconData iconData, SettingValue settingValue, int minValue, int maxValue) {
+	public BetterNumberElement(String displayName, ControlElement.IconData iconData,
+	                           SettingValue settingValue, int minValue, int maxValue) {
 		this(displayName, iconData, settingValue.getAsInteger(), minValue, maxValue, integer -> {
 			settingValue.setValue(integer);
 			settingValue.getConfiguration().set(settingValue.getConfigPath(), integer);
@@ -43,8 +48,9 @@ public class BetterNumberElement implements BetterElement {
 	}
 
 	public BetterNumberElement addSettings(Object... objects) {
-		if (objects.length == 0)
+		if (objects.length == 0) {
 			return this;
+		}
 		Arrays.stream(objects).forEach(object -> {
 			if (object instanceof BetterElement) {
 				numberElement.getSubSettings().add(((BetterElement) object).getElement());

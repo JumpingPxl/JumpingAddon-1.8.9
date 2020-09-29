@@ -1,6 +1,5 @@
 package de.jumpingpxl.jumpingaddon.util.elements;
 
-
 import de.jumpingpxl.jumpingaddon.util.SettingValue;
 import de.jumpingpxl.jumpingaddon.util.Settings;
 import net.labymod.gui.elements.DropDownMenu;
@@ -14,12 +13,17 @@ import net.labymod.utils.Consumer;
 
 public class BetterDropDownElement implements BetterElement {
 
-	private DropDownElement<String> dropDownElement;
+	private final DropDownElement<String> dropDownElement;
 
-	public BetterDropDownElement(String displayName, String[] values, String defaultValue, Consumer<String> consumer) {
-		DropDownMenu<String> dropDownMenu = new DropDownMenu<String>(" §7» " + Settings.SettingsCategory.getLastCategory().getColor() + displayName, 0, 0, 0, 0).fill(values);
+	public BetterDropDownElement(String displayName, String[] values, String defaultValue,
+	                             Consumer<String> consumer) {
+		DropDownMenu<String> dropDownMenu = new DropDownMenu<String>(
+				" §7» " + Settings.SettingsCategory.getLastCategory().getColor() + displayName, 0, 0, 0,
+				0).fill(values);
 		dropDownMenu.setSelected(defaultValue);
-		dropDownElement = new DropDownElement<>(" §7» " + Settings.SettingsCategory.getLastCategory().getColor() + displayName, dropDownMenu);
+		dropDownElement = new DropDownElement<>(
+				" §7» " + Settings.SettingsCategory.getLastCategory().getColor() + displayName,
+				dropDownMenu);
 		dropDownElement.setChangeListener(consumer);
 	}
 

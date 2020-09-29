@@ -16,9 +16,9 @@ import net.labymod.utils.Material;
 
 public class GommeTTTOnlineCoutInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
-	private GommeHDSupport gommeHDSupport;
+	private final GommeHDSupport gommeHDSupport;
 
 	public GommeTTTOnlineCoutInGameModule(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -33,7 +33,8 @@ public class GommeTTTOnlineCoutInGameModule extends SimpleModule implements InGa
 	@Override
 	public String getDisplayValue() {
 		int i = LabyModCore.getMinecraft().getConnection().getPlayerInfoMap().size();
-		return "§a" + i + "§7/§c" + (gommeHDSupport.getTttOnlineCount() == -1 ? i : gommeHDSupport.getTttOnlineCount());
+		return "§a" + i + "§7/§c" + (gommeHDSupport.getTttOnlineCount() == -1 ? i
+				: gommeHDSupport.getTttOnlineCount());
 	}
 
 	@Override
@@ -43,7 +44,9 @@ public class GommeTTTOnlineCoutInGameModule extends SimpleModule implements InGa
 
 	@Override
 	public boolean isShown() {
-		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET) && (jumpingAddon.getConnection().getGameType().getName().equalsIgnoreCase("TTT") && gommeHDSupport.isIngame());
+		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET) && (
+				jumpingAddon.getConnection().getGameType().getName().equalsIgnoreCase("TTT")
+						&& gommeHDSupport.isIngame());
 	}
 
 	@Override

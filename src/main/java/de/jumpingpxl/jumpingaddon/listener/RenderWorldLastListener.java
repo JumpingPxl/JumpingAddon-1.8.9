@@ -11,13 +11,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderWorldLastListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public RenderWorldLastListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
 	}
 
 	@SubscribeEvent
-	public void onWorldRender(RenderWorldLastEvent event){
+	public void onWorldRender(RenderWorldLastEvent event) {
 	}
 }

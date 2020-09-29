@@ -1,17 +1,15 @@
 package de.jumpingpxl.jumpingaddon.util.mods;
 
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
-import lombok.Getter;
 
 /**
  * @author Nico (JumpingPxl) Middendorf
  * @date 02.03.2019
  */
 
-@Getter
 public class ModuleHandler {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 	private PingModule pingModule;
 	private ActionModule actionModule;
 	private DiscordRPCModule discordRPCModule;
@@ -29,5 +27,29 @@ public class ModuleHandler {
 		hitBoxModule = new HitBoxModule(jumpingAddon);
 		signSearchModule = new SignSearchModule(jumpingAddon);
 		return this;
+	}
+
+	public JumpingAddon getJumpingAddon() {
+		return this.jumpingAddon;
+	}
+
+	public PingModule getPingModule() {
+		return this.pingModule;
+	}
+
+	public ActionModule getActionModule() {
+		return this.actionModule;
+	}
+
+	public DiscordRPCModule getDiscordRPCModule() {
+		return this.discordRPCModule;
+	}
+
+	public HitBoxModule getHitBoxModule() {
+		return this.hitBoxModule;
+	}
+
+	public SignSearchModule getSignSearchModule() {
+		return this.signSearchModule;
 	}
 }

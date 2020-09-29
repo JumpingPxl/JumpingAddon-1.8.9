@@ -13,13 +13,14 @@ import java.io.OutputStream;
 
 public final class DiscordRPC {
 
+	private static final String DLL_VERSION = "3.0.0";
+
 	static {
 		loadDLL();
 	}
 
-	private static final String DLL_VERSION = "3.0.0";
-
-	public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister) {
+	public static void discordInitialize(String applicationId, DiscordEventHandlers handlers,
+	                                     boolean autoRegister) {
 		DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, null);
 	}
 
@@ -27,7 +28,8 @@ public final class DiscordRPC {
 		DLL.INSTANCE.Discord_Register(applicationId, command);
 	}
 
-	public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId) {
+	public static void discordInitialize(String applicationId, DiscordEventHandlers handlers,
+	                                     boolean autoRegister, String steamId) {
 		DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, steamId);
 	}
 
@@ -73,7 +75,8 @@ public final class DiscordRPC {
 
 		File f = new File(tempPath);
 
-		try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)) {
+		try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath);
+		     OutputStream out = FileUtils.openOutputStream(f)) {
 			IOUtils.copy(in, out);
 			FileUtils.forceDeleteOnExit(f);
 		} catch (IOException e) {
@@ -84,9 +87,11 @@ public final class DiscordRPC {
 	}
 
 	private interface DLL extends Library {
+
 		DLL INSTANCE = (DLL) Native.loadLibrary("discord-rpc", DLL.class);
 
-		void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
+		void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister,
+		                        String optionalSteamId);
 
 		void Discord_Register(String applicationId, String command);
 

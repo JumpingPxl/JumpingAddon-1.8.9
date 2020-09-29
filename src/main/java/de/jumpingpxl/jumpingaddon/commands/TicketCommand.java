@@ -13,7 +13,7 @@ import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
 
 public class TicketCommand implements CommandExecutor {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public TicketCommand(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -21,19 +21,23 @@ public class TicketCommand implements CommandExecutor {
 
 	@Override
 	public boolean execute(CommandHandler.Command command, String label, String[] args) {
-		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET)
+		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET) {
 			return false;
+		}
 		GommeHDSupport gommeHDSupport = (GommeHDSupport) jumpingAddon.getConnection().getSupport();
-		if (jumpingAddon.getConnection().getGameType() == null || !jumpingAddon.getConnection().getGameType().getName().equals("TTT"))
-			send("ticketNotInTTT", label);
-		else if (gommeHDSupport.isIngame())
-			send("ticketAlreadyIngame");
-		else if (label.contains("detectiveticket") || label.contains("dticket")) {
+		if (jumpingAddon.getConnection().getGameType() == null || !jumpingAddon.getConnection()
+				.getGameType()
+				.getName()
+				.equals("TTT")) {
+			send(jumpingAddon, "ticketNotInTTT", label);
+		} else if (gommeHDSupport.isIngame()) {
+			send(jumpingAddon, "ticketAlreadyIngame");
+		} else if (label.contains("detectiveticket") || label.contains("dticket")) {
 			gommeHDSupport.setTicket("d");
-			send("ticketDetective");
+			send(jumpingAddon, "ticketDetective");
 		} else {
 			gommeHDSupport.setTicket("t");
-			send("ticketTraitor");
+			send(jumpingAddon, "ticketTraitor");
 		}
 		return true;
 	}

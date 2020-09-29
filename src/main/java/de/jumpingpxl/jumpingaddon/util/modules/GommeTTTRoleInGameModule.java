@@ -19,8 +19,8 @@ import java.util.List;
 
 public class GommeTTTRoleInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
-	private GommeHDSupport gommeHDSupport;
+	private final JumpingAddon jumpingAddon;
+	private final GommeHDSupport gommeHDSupport;
 	private boolean shortName;
 
 	public GommeTTTRoleInGameModule(JumpingAddon jumpingAddon) {
@@ -45,7 +45,9 @@ public class GommeTTTRoleInGameModule extends SimpleModule implements InGameModu
 
 	@Override
 	public boolean isShown() {
-		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET) && (jumpingAddon.getConnection().getGameType().getName().equalsIgnoreCase("TTT") && gommeHDSupport.isIngame());
+		return jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET) && (
+				jumpingAddon.getConnection().getGameType().getName().equalsIgnoreCase("TTT")
+						&& gommeHDSupport.isIngame());
 	}
 
 	@Override
@@ -56,7 +58,9 @@ public class GommeTTTRoleInGameModule extends SimpleModule implements InGameModu
 	@Override
 	public void fillSubSettings(List<SettingsElement> settingsElements) {
 		super.fillSubSettings(settingsElements);
-		settingsElements.add((new BooleanElement(this, new ControlElement.IconData(Material.LEVER), "Short name", "tttShortRoleName")));
+		settingsElements.add(
+				(new BooleanElement(this, new ControlElement.IconData(Material.LEVER), "Short name",
+						"tttShortRoleName")));
 	}
 
 	@Override

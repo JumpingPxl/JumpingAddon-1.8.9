@@ -73,19 +73,31 @@
       "minigame": true
     },
     {
+      "definition": "zombies",
+      "name": "Zombies",
+      "prefix": "",
+      "minigame": true
+    },
+    {
       "definition": "ttt",
       "name": "TTT",
       "prefix": "",
       "minigame": true
     },
     {
-      "definition": "ettt12",
+      "definition": "ttt12",
       "name": "TTT",
       "prefix": "",
       "minigame": true
     },
     {
-      "definition": "ettt16",
+      "definition": "ttt16",
+      "name": "TTT",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "ttt24",
       "name": "TTT",
       "prefix": "",
       "minigame": true
@@ -105,6 +117,12 @@
     {
       "definition": "cookies",
       "name": "Cookies",
+      "prefix": "",
+      "minigame": true
+    },
+    {
+      "definition": "bedrocktowerbattle",
+      "name": "BedrockTowerBattle",
       "prefix": "",
       "minigame": true
     },
@@ -192,7 +210,5 @@
       "prefix": "",
       "minigame": true
     }
-  ],
-  "timolia": [],
-  "rewinside": []
+  ]
 }

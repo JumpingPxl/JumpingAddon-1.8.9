@@ -189,11 +189,11 @@
         },
         {
           "memberName": "discordLargeAddition",
-          "message": " using the LabyMod v{0} with JumpingAddon v{1}"
+          "message": " using the LabyMod with JumpingAddon v{1}"
         },
         {
           "memberName": "discordSmallImage",
-          "message": "Using the LabyMod v{0} with JumpingAddon v{1}"
+          "message": "Using the LabyMod with JumpingAddon v{1}"
         }
       ]
     }

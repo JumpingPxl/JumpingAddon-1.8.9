@@ -21,9 +21,9 @@ import java.io.IOException;
  */
 
 public class ModGuiSignSearch extends GuiScreen {
-	
-	private SignSearchModule signSearchModule;
-	private GuiScreen lastScreen;
+
+	private final SignSearchModule signSearchModule;
+	private final GuiScreen lastScreen;
 	private SignSearchModule.ModTextField fieldSearch;
 	private SignSearchModule.ModTextField fieldBlacklist;
 	private SignSearchModule.ModTextField fieldPartySize;
@@ -32,9 +32,9 @@ public class ModGuiSignSearch extends GuiScreen {
 	private CheckBox checkBoxNightmode;
 	private CheckBox checkBoxAutoJoin;
 
-	public ModGuiSignSearch(GuiScreen lastScreen) {
+	public ModGuiSignSearch(JumpingAddon jumpingAddon, GuiScreen lastScreen) {
 		this.lastScreen = lastScreen;
-		signSearchModule = JumpingAddon.getInstance().getModuleHandler().getSignSearchModule();
+		signSearchModule = jumpingAddon.getModuleHandler().getSignSearchModule();
 	}
 
 	@Override
@@ -42,49 +42,82 @@ public class ModGuiSignSearch extends GuiScreen {
 		Keyboard.enableRepeatEvents(true);
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 110, "Done"));
-		this.fieldSearch = new SignSearchModule.ModTextField(0, LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 - 100, this.height / 4 + 20, 200, 20, false, -1);
+		this.fieldSearch = new SignSearchModule.ModTextField(0,
+				LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 - 100, this.height / 4 + 20,
+				200, 20, false, -1);
 		this.fieldSearch.setBlackBox(false);
 		this.fieldSearch.setText(signSearchModule.getSignSearchString().getAsString());
 		this.fieldSearch.setPlaceHolder(LanguageManager.translate("search_on_signs") + "..");
 		this.fieldSearch.setFocused(false);
-		this.fieldSearch.setDescription("Search for specific maps and gamemodes\nAffected signs are marked green ; not matching signs red\n \nSeparate multiple entries with \",\"");
-		this.fieldPartySize = new SignSearchModule.ModTextField(0, LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 + 10, this.height / 4 + 80, 90, 20, true, 2);
+		this.fieldSearch.setDescription(
+				"Search for specific maps and gamemodes\nAffected signs are marked green ; not matching "
+						+ "signs red\n \nSeparate multiple entries with \",\"");
+		this.fieldPartySize = new SignSearchModule.ModTextField(0,
+				LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 + 10, this.height / 4 + 80,
+				90,
+				20, true, 2);
 		this.fieldPartySize.setBlackBox(false);
 		this.fieldPartySize.setText(signSearchModule.getSignSearchPartySize().getAsString());
 		this.fieldPartySize.setPlaceHolder("Party size..");
-		this.fieldPartySize.setDescription("Only search for servers which has " + (fieldPartySize.getText().isEmpty() || fieldPartySize.getText().equals("0") ? "x" : fieldPartySize.getText()) + " free slots");
-		this.fieldBlacklist = new SignSearchModule.ModTextField(0, LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 - 100, this.height / 4 + 50, 200, 20, false, -1);
+		this.fieldPartySize.setDescription("Only search for servers which has " + (
+				fieldPartySize.getText().isEmpty() || fieldPartySize.getText().equals("0") ? "x"
+						: fieldPartySize.getText()) + " free slots");
+		this.fieldBlacklist = new SignSearchModule.ModTextField(0,
+				LabyModCore.getMinecraft().getFontRenderer(), this.width / 2 - 100, this.height / 4 + 50,
+				200, 20, false, -1);
 		this.fieldBlacklist.setBlackBox(false);
 		this.fieldBlacklist.setText(signSearchModule.getSignSearchBlacklist().getAsString());
 		this.fieldBlacklist.setPlaceHolder(LanguageManager.translate("blacklist") + "..");
-		this.fieldBlacklist.setDescription("Blacklist specific maps and gamemodes\nAffected signs are marked red\n \nSeparate multiple entries with \",\"");
-		this.checkBoxEnabled = new CheckBox("Enabled", signSearchModule.getSignSearchEnabled().getAsBoolean() ? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 + 100 + 5, this.height / 4 + 20, 20, 20);
+		this.fieldBlacklist.setDescription(
+				"Blacklist specific maps and gamemodes\nAffected signs are marked red\n \nSeparate "
+						+ "multiple entries with \",\"");
+		this.checkBoxEnabled = new CheckBox("Enabled",
+				signSearchModule.getSignSearchEnabled().getAsBoolean() ? CheckBox.EnumCheckBoxValue.ENABLED
+						: CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 + 100 + 5,
+				this.height / 4 + 20, 20, 20);
 		this.checkBoxEnabled.setUpdateListener(accepted -> {
-			signSearchModule.getSignSearchEnabled().setValue(accepted == CheckBox.EnumCheckBoxValue.ENABLED);
+			signSearchModule.getSignSearchEnabled().setValue(
+					accepted == CheckBox.EnumCheckBoxValue.ENABLED);
 			signSearchModule.getSignSearchEnabled().getConfiguration().save();
 			initGui();
 		});
-		this.checkBoxFilterFullServer = new CheckBox(LanguageManager.translate("filter_full_servers"), signSearchModule.getSignSearchFullServer().getAsBoolean() ? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 - 100 + 5, this.height / 4 + 80, 20, 20);
+		this.checkBoxFilterFullServer = new CheckBox(LanguageManager.translate("filter_full_servers"),
+				signSearchModule.getSignSearchFullServer().getAsBoolean()
+						? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null,
+				this.width / 2 - 100 + 5, this.height / 4 + 80, 20, 20);
 		this.checkBoxFilterFullServer.setUpdateListener(accepted -> {
-			signSearchModule.getSignSearchFullServer().setValue(accepted == CheckBox.EnumCheckBoxValue.ENABLED);
+			signSearchModule.getSignSearchFullServer().setValue(
+					accepted == CheckBox.EnumCheckBoxValue.ENABLED);
 			signSearchModule.getSignSearchFullServer().getConfiguration().save();
 			initGui();
 		});
-		this.checkBoxFilterFullServer.setDescription("If enabled the signs of full servers are marked orange");
-		this.checkBoxNightmode = new CheckBox(LanguageManager.translate("filter_empty_servers"), signSearchModule.getSignSearchEmptyServer().getAsBoolean() ? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 - 100 + 35 + 5, this.height / 4 + 80, 20, 20);
+		this.checkBoxFilterFullServer.setDescription(
+				"If enabled the signs of full servers are marked orange");
+		this.checkBoxNightmode = new CheckBox(LanguageManager.translate("filter_empty_servers"),
+				signSearchModule.getSignSearchEmptyServer().getAsBoolean()
+						? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null,
+				this.width / 2 - 100 + 35 + 5, this.height / 4 + 80, 20, 20);
 		this.checkBoxNightmode.setUpdateListener(accepted -> {
-			signSearchModule.getSignSearchEmptyServer().setValue(accepted == CheckBox.EnumCheckBoxValue.ENABLED);
+			signSearchModule.getSignSearchEmptyServer().setValue(
+					accepted == CheckBox.EnumCheckBoxValue.ENABLED);
 			signSearchModule.getSignSearchEmptyServer().getConfiguration().save();
 			initGui();
 		});
-		this.checkBoxNightmode.setDescription("If enabled, the signs of empty servers are excluded from the search");
-		this.checkBoxAutoJoin = new CheckBox("Auto Join", signSearchModule.getSignSearchAutoJoin().getAsBoolean() ? CheckBox.EnumCheckBoxValue.ENABLED : CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 - 100 + 70 + 5, this.height / 4 + 80, 20, 20);
+		this.checkBoxNightmode.setDescription(
+				"If enabled, the signs of empty servers are excluded from the search");
+		this.checkBoxAutoJoin = new CheckBox("Auto Join",
+				signSearchModule.getSignSearchAutoJoin().getAsBoolean() ?
+						CheckBox.EnumCheckBoxValue.ENABLED
+						: CheckBox.EnumCheckBoxValue.DISABLED, null, this.width / 2 - 100 + 70 + 5,
+				this.height / 4 + 80, 20, 20);
 		this.checkBoxAutoJoin.setUpdateListener(accepted -> {
-			signSearchModule.getSignSearchAutoJoin().setValue(accepted == CheckBox.EnumCheckBoxValue.ENABLED);
+			signSearchModule.getSignSearchAutoJoin().setValue(
+					accepted == CheckBox.EnumCheckBoxValue.ENABLED);
 			signSearchModule.getSignSearchAutoJoin().getConfiguration().save();
 			initGui();
 		});
-		this.checkBoxAutoJoin.setDescription("Automatic connects to an server based on the search results");
+		this.checkBoxAutoJoin.setDescription(
+				"Automatic connects to an server based on the search results");
 	}
 
 	@Override
@@ -106,24 +139,29 @@ public class ModGuiSignSearch extends GuiScreen {
 		this.checkBoxFilterFullServer.drawCheckbox(mouseX, mouseY);
 		this.checkBoxNightmode.drawCheckbox(mouseX, mouseY);
 		this.checkBoxAutoJoin.drawCheckbox(mouseX, mouseY);
-		draw.drawCenteredString(LanguageManager.translate("title_sign_search"), (double) (this.width / 2), (double) (this.height / 4));
+		draw.drawCenteredString(LanguageManager.translate("title_sign_search"), this.width / 2,
+				this.height / 4);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(ModTextures.BUTTON_SIGNSEARCH);
-		LabyMod.getInstance().getDrawUtils().drawTexture((double) (this.fieldSearch.xPosition - 22), (double) this.fieldSearch.yPosition, 255.0D, 255.0D, 20.0D, 20.0D);
+		LabyMod.getInstance().getDrawUtils().drawTexture(this.fieldSearch.xPosition - 22,
+				this.fieldSearch.yPosition, 255.0D, 255.0D, 20.0D, 20.0D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		super.actionPerformed(button);
-		if (button.id == 0)
+		if (button.id == 0) {
 			Minecraft.getMinecraft().displayGuiScreen(this.lastScreen);
+		}
 	}
 
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		super.keyTyped(typedChar, keyCode);
-		if (!this.fieldSearch.isFocused() && (!this.fieldBlacklist.isFocused() && !this.fieldPartySize.isFocused()))
+		if (!this.fieldSearch.isFocused() && (!this.fieldBlacklist.isFocused()
+				&& !this.fieldPartySize.isFocused())) {
 			this.fieldSearch.setFocused(true);
+		}
 		if (this.fieldSearch.textboxKeyTyped(typedChar, keyCode)) {
 			signSearchModule.getSignSearchString().setValue(this.fieldSearch.getText());
 			signSearchModule.getSignSearchString().getConfiguration().save();

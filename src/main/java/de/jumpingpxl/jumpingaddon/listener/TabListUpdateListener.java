@@ -11,7 +11,7 @@ import net.labymod.api.events.TabListEvent;
 
 public class TabListUpdateListener implements TabListEvent {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public TabListUpdateListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -21,9 +21,11 @@ public class TabListUpdateListener implements TabListEvent {
 	public void onUpdate(Type type, String formatted, String unformatted) {
 		if (type == Type.HEADER) {
 			jumpingAddon.getSettings().setTabHeader(formatted.replace("\n", "\\n"));
-			if (jumpingAddon.getConnection().getServer() == Server.GOMMEHD_NET)
+			if (jumpingAddon.getConnection().getServer() == Server.GOMMEHD_NET) {
 				jumpingAddon.getConnection().getSupport().handleGameType(unformatted);
-		} else
+			}
+		} else {
 			jumpingAddon.getSettings().setTabFooter(formatted.replace("\n", "\\n"));
+		}
 	}
 }

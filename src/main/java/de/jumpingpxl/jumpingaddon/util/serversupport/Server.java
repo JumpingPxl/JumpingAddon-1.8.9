@@ -1,7 +1,5 @@
 package de.jumpingpxl.jumpingaddon.util.serversupport;
 
-import lombok.Getter;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,25 +8,35 @@ import java.util.Map;
  * @date 27.02.2019
  */
 
-@Getter
 public enum Server {
 
-	GOMMEHD_NET("GommeHD", "gommehd.net", "gommehd.de", "gommehd.cloud", "gommehd.vip", "gommehd.fun", "gommehd.com", "gommehd.tk"),
-	TIMOLIA_DE("Timolia", "timolia.de"),
-	REWINSIDE_TV("rewinside", "rewinside.tv");
+	GOMMEHD_NET("GommeHD", "gommehd.net", "gommehd.de", "gommehd.cloud", "gommehd.vip", "gommehd"
+			+ ".fun",
+			"gommehd.com", "gommehd.tk", "horny.agency");
 
-	@Getter
-	private static Map<Server, ServerSupport> supportMap = new HashMap<>();
+	private static final Map<Server, ServerSupport> supportMap = new HashMap<>();
 
-	private String name;
-	private String[] domains;
+	private final String name;
+	private final String[] domains;
 
 	Server(String name, String... domains) {
 		this.name = name;
 		this.domains = domains;
 	}
 
+	public static Map<Server, ServerSupport> getSupportMap() {
+		return Server.supportMap;
+	}
+
 	public ServerSupport getServerSupport() {
 		return supportMap.get(this);
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String[] getDomains() {
+		return this.domains;
 	}
 }

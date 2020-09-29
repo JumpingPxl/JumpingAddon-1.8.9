@@ -9,7 +9,7 @@ import de.jumpingpxl.jumpingaddon.JumpingAddon;
 
 public class RenderGameOverlayListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public RenderGameOverlayListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;

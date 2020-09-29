@@ -4,14 +4,19 @@
       "definition": "checkFriendJoin",
       "messages": [
         "(?<=(^§7\\[§4Friends§7] ))§[\\w]{2,17}(§r)?(?=( §7is now §aonline$))",
-        "(?<=(^§7\\[§4Freunde§7] ))§[\\w]{2,17}(§r)?(?=( §7ist nun §aonline$))"
+        "(?<=(^§7\\[§4Freunde§7] ))§[\\w]{2,17}(§r)?(?=( §7ist nun §aonline$))",
+        "(?<=(^§7\\[§4Freunde§7] ))§[\\w]{2,17}(§r)?(?=( §7is jetz §aonline$))",
+        "(?<=(^§7\\[§cClans§7] ))§[\\w]{2,17}(§r)?(?=( §7is now §aonline$))",
+        "(?<=(^§7\\[§cClans§7] ))§[\\w]{2,17}(§r)?(?=( §7ist nun §aonline$))",
+        "(?<=(^§7\\[§cClans§7] ))§[\\w]{2,17}(§r)?(?=( §7is jetz §aonline$))"
       ]
     },
     {
       "definition": "checkPartyInvite",
       "messages": [
         "(?<=(^§7\\[§5Party§7] ))§[\\w]{2,17}(§r)?(?=( §7invited you to their party$))",
-        "(?<=(^§7\\[§5Party§7] ))§[\\w]{2,17}(§r)?(?=( §7hat dich in eine Party eingeladen$))"
+        "(?<=(^§7\\[§5Party§7] ))§[\\w]{2,17}(§r)?(?=( §7hat dich in eine Party eingeladen$))",
+        "(?<=(^§7\\[§5Party§7] ))§[\\w]{2,17}(§r)?(?=( §7hot di in a Party einglodn$))"
       ]
     },
     {
@@ -23,48 +28,53 @@
     {
       "definition": "checkMessageSender",
       "messages": [
-        "(?<=(^(§7\\[§e([\\w$%.+\\-#]{3,5})§7] )?))§[\\w]{2,17}(?=(§7:.+))"
+        "(?<=(^(§7\\[§e([\\w$%.,+\\-#üÜäÄöÖ]{2,5})§7] )?))§[\\w]{2,17}(?=(§7:.+))"
       ]
     },
     {
       "definition": "checkReport",
       "messages": [
-        "^\\[Guardian] Thank you for your report! We will inform you as soon as your report has been processed.$",
-        "^\\[Guardian] Vielen Dank für deinen Report! Wir informieren dich, sobald es Neuigkeiten gibt.$"
+        "^\\[Guardian] Thank you for your report! We will inform you as soon as your report has been processed$",
+        "^\\[Guardian] Vielen Dank für deinen Report! Wir informieren dich, sobald es Neuigkeiten gibt$",
+        "^\\[Guardian] Donk da schen fia deinen Report! Wir informian di, sobalds Neuigkeitn gibt$"
       ]
     },
     {
       "definition": "checkNicked",
       "messages": [
         "(?<=(^\\[NICK] Current nickname: ))[\\w]{1,16}",
-        "(?<=(^\\[NICK] Aktueller Nickname: ))[\\w]{1,16}"
+        "(?<=(^\\[NICK] Aktueller Nickname: ))[\\w]{1,16}",
+        "(?<=(^\\[NICK] Aktuella Nicknom: ))[\\w]{1,16}"
       ]
     },
     {
       "definition": "checkUnnicked",
       "messages": [
         "^\\[NICK] Your nickname has been removed$",
-        "^\\[NICK] Dein Nickname wurde entfernt$"
+        "^\\[NICK] Dein Nickname wurde entfernt$",
+        "^\\[NICK] Dei Nicknom is entfernt wordn$"
       ]
     },
     {
       "definition": "checkColoredGG",
       "messages": [
-        "(?<=(^(§7\\[§e([\\w$%.+\\-#]{3,5})§7] )?§[\\w]{2,17}§7:).{0,100})§7§k--§[0-9a-fA-F] ([Gg]{2}|[Nn][Dd]) §7§k--(?=(.*))"
+        "(?<=(^(§7\\[§e([\\w$%.,+\\-#üÜäÄöÖ]{2,5})§7] )?§[\\w]{2,17}§7:).{0,100})§7§k--§[0-9a-fA-F] ([Gg]{2}|[Nn][Dd]|[Ww][Pp]|[Gg]{2}[Ww][Pp]) §7§k--(?=(.*))"
       ]
     },
     {
       "definition": "checkTTTLobbyEnd",
       "messages": [
         "^\\[TTT] The game starts in 1 second$",
-        "^\\[TTT] Die Runde beginnt in 1 Sekunde$"
+        "^\\[TTT] Die Runde beginnt in 1 Sekunde$",
+        "^\\[TTT] De Rundn startet in 1 Sekundn$"
       ]
     },
     {
       "definition": "checkTTTKilled",
       "messages": [
         "(?<=(^§f\\[§4TTT§f] §cYou were killed by ))§[\\w]{2,17}",
-        "(?<=(^§f\\[§4TTT§f] §cDu wurdest von ))§[\\w]{2,17}(?=( §cgetötet))"
+        "(?<=(^§f\\[§4TTT§f] §cDu wurdest von ))§[\\w]{2,17}(?=( §cgetötet))",
+        "(?<=(^§f\\[§4TTT§f] §cDu bist von ))§[\\w]{2,17}(?=( §cgetötet wordn))"
       ]
     },
     {
@@ -75,7 +85,10 @@
         "(?<=(^\\[TTT] You were killed by ))[\\w]{1,16}",
         "^\\[TTT] Die Traitor haben alle Innocents eliminiert$",
         "^\\[TTT] Die Innocents haben den Anschlag der Terroristen überlebt$",
-        "(?<=(^\\[TTT] Du wurdest von ))[\\w]{1,16}(?=( getötet))"
+        "(?<=(^\\[TTT] Du wurdest von ))[\\w]{1,16}(?=( getötet))",
+        "^\\[TTT] Die Traitor hobn olle Innocents eliminiat$",
+        "^\\[TTT] De Innocents hobn den Onschlog da Terroristn übalebt$",
+        "(?<=(^\\[TTT] Du bist von ))[\\w]{1,16}(?=( getötet wordn))"
       ]
     },
     {
@@ -83,10 +96,9 @@
       "messages": [
         "(?<=(^§f\\[§4TTT§f] §eYou are a ))§\\w*",
         "(?<=(^§f\\[§4TTT§f] §eYou are an ))§\\w*",
-        "(?<=(^§f\\[§4TTT§f] §eDu bist ein ))§\\w*"
+        "(?<=(^§f\\[§4TTT§f] §eDu bist ein ))§\\w*",
+        "(?<=(^§f\\[§4TTT§f] §eDu bist a ))§\\w*"
       ]
     }
-  ],
-  "timolia": [],
-  "rewinside": []
+  ]
 }

@@ -6,6 +6,7 @@ package de.jumpingpxl.jumpingaddon.util.transformer;
  */
 
 public interface Transformer {
+
 	boolean matches(String transformedName);
 
 	byte[] transform(String name, String transformedName, byte[] basicClass);

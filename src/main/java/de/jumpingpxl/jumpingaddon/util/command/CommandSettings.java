@@ -11,7 +11,9 @@ import java.util.List;
  */
 
 public interface CommandSettings {
+
 	Object[] getSettings(CommandHandler.Command command);
 
-	void setSettings(CommandHandler.Command command, List<SettingValue> list, Configuration configuration);
+	void setSettings(CommandHandler.Command command, List<SettingValue> list,
+	                 Configuration configuration);
 }

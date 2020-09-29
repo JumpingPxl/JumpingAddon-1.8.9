@@ -39,10 +39,12 @@ public class TextElement extends SettingsElement {
 	public void draw(int x, int y, int maxX, int maxY, int mouseX, int mouseY) {
 		super.draw(x, y, maxX, maxY, mouseX, mouseY);
 		int absoluteY = y + spaceTop;
-		if (centered)
-			LabyMod.getInstance().getDrawUtils().drawCenteredString(super.getDisplayName(), x, absoluteY);
-		else
+		if (centered) {
+			LabyMod.getInstance().getDrawUtils().drawCenteredString(super.getDisplayName(), x,
+					absoluteY);
+		} else {
 			LabyMod.getInstance().getDrawUtils().drawString(super.getDisplayName(), x, absoluteY);
+		}
 	}
 
 	public int getEntryHeight() {

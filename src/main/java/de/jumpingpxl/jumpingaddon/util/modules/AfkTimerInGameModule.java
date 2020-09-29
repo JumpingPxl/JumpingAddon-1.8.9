@@ -29,7 +29,7 @@ import java.util.List;
 
 public class AfkTimerInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 	private String timer = "";
 	private int currentCount = 0;
 	private int currentTick = 0;
@@ -72,16 +72,20 @@ public class AfkTimerInGameModule extends SimpleModule implements InGameModule {
 	@Override
 	public void fillSubSettings(List<SettingsElement> settingsElements) {
 		super.fillSubSettings(settingsElements);
-		settingsElements.add((new NumberElement(this, new ControlElement.IconData(Material.WATCH), "Show idled Time", "idledTimeSeconds")).setRange(3, 1800));
+		settingsElements.add(
+				(new NumberElement(this, new ControlElement.IconData(Material.WATCH), "Show idled Time",
+						"idledTimeSeconds")).setRange(3, 1800));
 	}
 
 	@Override
 	public void loadSettings() {
 		this.idleTimeSeconds = Integer.parseInt(this.getAttribute("idledTimeSeconds", "10"));
-		if (jumpingAddon.getSettings().getIdleSeconds().getAsInteger() < 10)
+		if (jumpingAddon.getSettings().getIdleSeconds().getAsInteger() < 10) {
 			jumpingAddon.getSettings().getIdleSeconds().setValue(10);
-		if (this.idleTimeSeconds < 5)
+		}
+		if (this.idleTimeSeconds < 5) {
 			this.idleTimeSeconds = 5;
+		}
 	}
 
 	@Override
@@ -116,17 +120,26 @@ public class AfkTimerInGameModule extends SimpleModule implements InGameModule {
 				int currentMouseX = Mouse.getX();
 				int currentMouseY = Mouse.getY();
 				long currentMillis = System.currentTimeMillis();
-				if (!(!(this.lastMouseX == currentMouseX && this.lastMouseY == currentMouseY) && (currentGui == null || ((currentGui instanceof GuiChat || currentGui instanceof GuiChest) || ((currentGui instanceof GuiInventory || currentGui instanceof ModGuiMultiplayer))))) && LabyModCore.getMinecraft().getPlayer().moveForward == 0.0F && LabyModCore.getMinecraft().getPlayer().fallDistance == 0.0F) {
+				if (!(!(this.lastMouseX == currentMouseX && this.lastMouseY == currentMouseY) && (
+						currentGui == null || ((currentGui instanceof GuiChat || currentGui instanceof GuiChest)
+								|| ((currentGui instanceof GuiInventory
+								|| currentGui instanceof ModGuiMultiplayer)))))
+						&& LabyModCore.getMinecraft().getPlayer().moveForward == 0.0F
+						&& LabyModCore.getMinecraft().getPlayer().fallDistance == 0.0F) {
 					if (jumpingAddon.getConnection().isAfk()) {
 						if (++this.currentTick >= 20) {
 							this.currentTick = 0;
 							++this.currentCount;
-							this.timer = ModUtils.parseTimer(this.currentCount + jumpingAddon.getSettings().getIdleSeconds().getAsInteger());
+							this.timer = ModUtils.parseTimer(
+									this.currentCount + jumpingAddon.getSettings().getIdleSeconds().getAsInteger());
 						}
-					} else if (currentMillis - this.lastMove >= (long) (1000 * jumpingAddon.getSettings().getIdleSeconds().getAsInteger())) {
+					} else if (currentMillis - this.lastMove >= (long) (1000 * jumpingAddon.getSettings()
+							.getIdleSeconds()
+							.getAsInteger())) {
 						jumpingAddon.getConnection().setAfk(true);
 						this.currentCount = 0;
-						this.timer = ModUtils.parseTimer(jumpingAddon.getSettings().getIdleSeconds().getAsInteger());
+						this.timer = ModUtils.parseTimer(
+								jumpingAddon.getSettings().getIdleSeconds().getAsInteger());
 					}
 				} else {
 					if (jumpingAddon.getConnection().isAfk()) {
@@ -136,7 +149,8 @@ public class AfkTimerInGameModule extends SimpleModule implements InGameModule {
 					}
 					this.lastMove = currentMillis;
 				}
-				if (!jumpingAddon.getConnection().isAfk() && currentMillis - this.lastTimeAfk >= (long) (1000 * this.idleTimeSeconds)) {
+				if (!jumpingAddon.getConnection().isAfk() && currentMillis - this.lastTimeAfk >= (long) (
+						1000 * this.idleTimeSeconds)) {
 					this.timer = "";
 					this.currentCount = 0;
 				}

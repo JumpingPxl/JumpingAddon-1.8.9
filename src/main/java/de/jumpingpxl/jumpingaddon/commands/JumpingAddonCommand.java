@@ -1,19 +1,9 @@
 package de.jumpingpxl.jumpingaddon.commands;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import de.jumpingpxl.jumpingaddon.JumpingAddon;
 import de.jumpingpxl.jumpingaddon.util.command.CommandExecutor;
 import de.jumpingpxl.jumpingaddon.util.command.CommandHandler;
 import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
-import net.labymod.core.LabyModCore;
-import net.labymod.main.LabyMod;
-import net.labymod.user.User;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.play.server.S02PacketChat;
-import net.minecraft.util.ChatComponentText;
-
-import java.util.UUID;
 
 /**
  * @author Nico (JumpingPxl) Middendorf
@@ -22,7 +12,7 @@ import java.util.UUID;
 
 public class JumpingAddonCommand implements CommandExecutor {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public JumpingAddonCommand(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -30,12 +20,13 @@ public class JumpingAddonCommand implements CommandExecutor {
 
 	@Override
 	public boolean execute(CommandHandler.Command command, String label, String[] args) {
-		if (args.length == 0)
-			send("commandUsage", label + " <debug|reload>");
-		else if (args[0].equalsIgnoreCase("reload"))
-			if (args.length == 1)
-				send("commandUsage", label + " reload <language[l],checkmessages[cm],gametypes[gt]>");
-			else
+		if (args.length == 0) {
+			send(jumpingAddon, "commandUsage", label + " <debug|reload>");
+		} else if (args[0].equalsIgnoreCase("reload")) {
+			if (args.length == 1) {
+				send(jumpingAddon, "commandUsage",
+						label + " reload <language[l],checkmessages[cm],gametypes[gt]>");
+			} else {
 				switch (args[1].toLowerCase()) {
 					case "language":
 					case "l":
@@ -58,9 +49,11 @@ public class JumpingAddonCommand implements CommandExecutor {
 						jumpingAddon.displayPrefixMessage("§7Gametype reload complete.");
 						break;
 				}
-		else if (args[0].equalsIgnoreCase("debug")) {
+			}
+		} else if (args[0].equalsIgnoreCase("debug")) {
 			jumpingAddon.setDebug(!jumpingAddon.isDebug());
-			jumpingAddon.displayPrefixMessage("§7Debug-Mode " + (jumpingAddon.isDebug() ? "§a" : "§cde") + "activated");
+			jumpingAddon.displayPrefixMessage(
+					"§7Debug-Mode " + (jumpingAddon.isDebug() ? "§a" : "§cde") + "activated");
 		}
 		return true;
 	}

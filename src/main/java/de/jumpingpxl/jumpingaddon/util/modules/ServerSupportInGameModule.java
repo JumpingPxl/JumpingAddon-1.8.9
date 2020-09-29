@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ServerSupportInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 	private boolean showWhenNotSupported;
 
 	public ServerSupportInGameModule(JumpingAddon jumpingAddon) {
@@ -52,12 +52,14 @@ public class ServerSupportInGameModule extends SimpleModule implements InGameMod
 	@Override
 	public void fillSubSettings(List<SettingsElement> settingsElements) {
 		super.fillSubSettings(settingsElements);
-		settingsElements.add(new BooleanElement(this, new ControlElement.IconData(Material.LEVER), "Show when not supported", "showSupportWhenNotSupported"));
+		settingsElements.add(new BooleanElement(this, new ControlElement.IconData(Material.LEVER),
+				"Show when not supported", "showSupportWhenNotSupported"));
 	}
 
 	@Override
 	public void loadSettings() {
-		showWhenNotSupported = Boolean.parseBoolean(this.getAttribute("showSupportWhenNotSupported", "false"));
+		showWhenNotSupported = Boolean.parseBoolean(
+				this.getAttribute("showSupportWhenNotSupported", "false"));
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import net.labymod.settings.elements.SettingsElement;
 
 public class BetterHeaderElement implements BetterElement {
 
-	private HeaderElement headerElement;
+	private final HeaderElement headerElement;
 
 	public BetterHeaderElement(String string) {
 		headerElement = new HeaderElement(string);

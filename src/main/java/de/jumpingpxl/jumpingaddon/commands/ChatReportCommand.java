@@ -12,7 +12,7 @@ import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
 
 public class ChatReportCommand implements CommandExecutor {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public ChatReportCommand(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -20,12 +20,14 @@ public class ChatReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean execute(CommandHandler.Command command, String label, String[] args) {
-		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET)
+		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET) {
 			return false;
-		if (args.length == 0)
-			send("commandUsage", label + " <player>");
-		else
+		}
+		if (args.length == 0) {
+			send(jumpingAddon, "commandUsage", label + " <player>");
+		} else {
 			jumpingAddon.sendMessage("/report " + args[0] + " chat confirm");
+		}
 		return true;
 	}
 

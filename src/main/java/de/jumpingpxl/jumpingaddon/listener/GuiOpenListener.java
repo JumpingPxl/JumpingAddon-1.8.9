@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class GuiOpenListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 	private boolean ownSignRenderer;
 
 	public GuiOpenListener(JumpingAddon jumpingAddon) {
@@ -36,12 +36,16 @@ public class GuiOpenListener {
 	public void onGuiOpen(GuiOpenEvent event) {
 		GuiScreen gui = LabyModCore.getForge().getGuiOpenEventGui(event);
 		jumpingAddon.getSettings().setPreviousGui(jumpingAddon.getSettings().getCurrentGui());
-		if (gui instanceof GuiSignSearch && jumpingAddon.getConnection().isOnServer(Server.GOMMEHD_NET))
-			gui = new ModGuiSignSearch(null);
+		if (gui instanceof GuiSignSearch && jumpingAddon.getConnection().isOnServer(
+				Server.GOMMEHD_NET)) {
+			gui = new ModGuiSignSearch(jumpingAddon, null);
+		}
 		if ((gui instanceof ModGuiMainMenu || gui instanceof GuiMainMenu) && !ownSignRenderer) {
 			Map mapSpecialRenderers = null;
 			try {
-				mapSpecialRenderers = (Map) ReflectionHelper.findField(TileEntityRendererDispatcher.class, LabyModCore.getMappingAdapter().getMapSpecialRenderersMappings()).get(TileEntityRendererDispatcher.instance);
+				mapSpecialRenderers = (Map) ReflectionHelper.findField(TileEntityRendererDispatcher.class,
+						LabyModCore.getMappingAdapter().getMapSpecialRenderersMappings()).get(
+						TileEntityRendererDispatcher.instance);
 			} catch (IllegalAccessException var7) {
 				var7.printStackTrace();
 			}
@@ -52,7 +56,8 @@ public class GuiOpenListener {
 		}
 		LabyModCore.getForge().setGuiOpenEventGui(event, gui);
 		jumpingAddon.getSettings().setCurrentGui(gui);
-		if (jumpingAddon.isDebug())
+		if (jumpingAddon.isDebug()) {
 			System.out.println("GUI " + gui);
+		}
 	}
 }

@@ -23,7 +23,8 @@ public interface ServerSupport {
 
 	ServerSupportHandler.GameType handleGameType(String handle);
 
-	ChatComponent handleIncomingMessage(ChatComponent chatComponent, String formatted, String unformatted);
+	ChatComponent handleIncomingMessage(ChatComponent chatComponent, String formatted,
+	                                    String unformatted);
 
 	boolean handleReceivingMessage(String formatted, String unformatted);
 
@@ -42,11 +43,11 @@ public interface ServerSupport {
 	}
 
 	interface SupportSettings {
+
 		void loadSettings(Configuration configuration);
 
 		default BetterElement getSettingsElement() {
 			return null;
 		}
 	}
-
 }

@@ -11,7 +11,7 @@ import net.labymod.utils.ServerData;
 
 public class JoinServerListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public JoinServerListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;

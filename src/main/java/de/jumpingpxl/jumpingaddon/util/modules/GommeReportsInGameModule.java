@@ -15,8 +15,8 @@ import net.labymod.utils.Material;
 
 public class GommeReportsInGameModule extends SimpleModule implements InGameModule {
 
-	private JumpingAddon jumpingAddon;
-	private GommeHDSupport gommeHDSupport;
+	private final JumpingAddon jumpingAddon;
+	private final GommeHDSupport gommeHDSupport;
 
 	public GommeReportsInGameModule(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;

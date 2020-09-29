@@ -6,4 +6,5 @@ package de.jumpingpxl.jumpingaddon.util.modules;
  */
 
 interface InGameModule {
+
 }

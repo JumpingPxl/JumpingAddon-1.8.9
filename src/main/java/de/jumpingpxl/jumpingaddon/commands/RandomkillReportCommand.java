@@ -12,7 +12,7 @@ import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
 
 public class RandomkillReportCommand implements CommandExecutor {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public RandomkillReportCommand(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
@@ -20,14 +20,18 @@ public class RandomkillReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean execute(CommandHandler.Command command, String label, String[] args) {
-		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET)
+		if (jumpingAddon.getConnection().getServer() != Server.GOMMEHD_NET) {
 			return false;
-		if (jumpingAddon.getConnection().getGameType() == null || !(jumpingAddon.getConnection().getGameType().getName().equals("TTT") || jumpingAddon.getConnection().getGameType().getName().equals("Replay")))
-			send("randomkillReportNotInTTT", label);
-		else if (args.length == 0)
-			send("commandUsage", label + " <player>");
-		else
+		}
+		if (jumpingAddon.getConnection().getGameType() == null || !(
+				jumpingAddon.getConnection().getGameType().getName().equals("TTT")
+						|| jumpingAddon.getConnection().getGameType().getName().equals("Replay"))) {
+			send(jumpingAddon, "randomkillReportNotInTTT", label);
+		} else if (args.length == 0) {
+			send(jumpingAddon, "commandUsage", label + " <player>");
+		} else {
 			jumpingAddon.sendMessage("/report " + args[0] + " randomkilling confirm");
+		}
 		return true;
 	}
 

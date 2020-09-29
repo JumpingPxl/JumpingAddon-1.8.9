@@ -11,7 +11,7 @@ import net.labymod.utils.ServerData;
 
 public class QuitServerListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public QuitServerListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;

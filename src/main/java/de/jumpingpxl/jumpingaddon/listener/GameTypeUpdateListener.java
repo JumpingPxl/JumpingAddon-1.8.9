@@ -12,19 +12,21 @@ import de.jumpingpxl.jumpingaddon.util.serversupport.ServerSupportHandler;
 
 public class GameTypeUpdateListener {
 
-	private JumpingAddon jumpingAddon;
+	private final JumpingAddon jumpingAddon;
 
 	public GameTypeUpdateListener(JumpingAddon jumpingAddon) {
 		this.jumpingAddon = jumpingAddon;
 	}
 
-	public void onGameTypeUpdate(Server server, ServerSupportHandler.GameType gameType, ServerSupportHandler.GameType oldGameType) {
+	public void onGameTypeUpdate(Server server, ServerSupportHandler.GameType gameType,
+	                             ServerSupportHandler.GameType oldGameType) {
 		if (server == Server.GOMMEHD_NET) {
 			GommeHDSupport gommeHDSupport = (GommeHDSupport) server.getServerSupport();
 			gommeHDSupport.setIngame(false);
 		}
-		if (!jumpingAddon.getIngameModuleHandler().getGameTypeModule().isShown())
+		if (!jumpingAddon.getIngameModuleHandler().getGameTypeModule().isShown()) {
 			jumpingAddon.getIngameModuleHandler().getGameTypeModule().setShown(true);
+		}
 		jumpingAddon.getConnection().setGameType(gameType);
 		jumpingAddon.getModuleHandler().getDiscordRPCModule().setGameType(gameType);
 	}

@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Task {
 
-	private Timer timer = new Timer();
-	private Runnable runnable;
+	private final Timer timer = new Timer();
+	private final Runnable runnable;
 	private boolean started;
 
 	public Task(Runnable runnable) {

@@ -1,7 +1,5 @@
 package de.jumpingpxl.jumpingaddon.util;
 
-import de.jumpingpxl.jumpingaddon.JumpingAddon;
-import lombok.Getter;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
@@ -17,9 +15,9 @@ import java.util.List;
  * @date 12.03.2019
  */
 
-@Getter
 public class ChatComponent {
 
+	private final List<ChatComponent> siblings = new ArrayList<>();
 	private String formattedText;
 	private String unformattedText;
 	private HoverEvent.Action hoverEventAction;
@@ -31,13 +29,12 @@ public class ChatComponent {
 	private boolean byText;
 	private boolean sibling;
 	private boolean prefix;
-	private List<ChatComponent> siblings = new ArrayList<>();
 	private ChatComponent parent;
 
 	public ChatComponent(String formattedText) {
 		byText = true;
 		this.formattedText = formattedText;
-		this.unformattedText = JumpingAddon.getInstance().getStringUtils().stripColor(formattedText);
+		this.unformattedText = StringUtil.stripColor(formattedText);
 	}
 
 	public ChatComponent(IChatComponent chatComponent, boolean... sibling) {
@@ -51,19 +48,25 @@ public class ChatComponent {
 		if (chatComponent.getChatStyle().getChatHoverEvent() != null) {
 			hoverEvent = true;
 			hoverEventAction = chatComponent.getChatStyle().getChatHoverEvent().getAction();
-			hoverEventValue = chatComponent.getChatStyle().getChatHoverEvent().getValue().getFormattedText();
+			hoverEventValue = chatComponent.getChatStyle()
+					.getChatHoverEvent()
+					.getValue()
+					.getFormattedText();
 		}
-		if (sibling.length == 0)
+		if (sibling.length == 0) {
 			append(chatComponent);
+		}
 	}
 
 	public ChatComponent getSibling(String string, boolean ignoreCase) {
 		ChatComponent chatComponent = null;
-		for (ChatComponent chatComponents : siblings)
-			if (ignoreCase ? chatComponents.getUnformattedText().equalsIgnoreCase(string) : chatComponents.getUnformattedText().equals(string)) {
+		for (ChatComponent chatComponents : siblings) {
+			if (ignoreCase ? chatComponents.getUnformattedText().equalsIgnoreCase(string)
+					: chatComponents.getUnformattedText().equals(string)) {
 				chatComponent = chatComponents;
 				break;
 			}
+		}
 		return chatComponent;
 	}
 
@@ -95,30 +98,31 @@ public class ChatComponent {
 		return siblings.get(index);
 	}
 
-	public ChatComponent setPrefix(boolean value) {
-		prefix = value;
-		return this;
-	}
-
 	public ChatComponent setText(String value) {
 		formattedText = value;
-		unformattedText = JumpingAddon.getInstance().getStringUtils().stripColor(value);
+		unformattedText = StringUtil.stripColor(value);
 		return this;
 	}
 
 	public ChatComponent append(ChatComponent... chatComponents) {
-		if (chatComponents.length == 1 && !chatComponents[0].getSiblings().isEmpty())
-			chatComponents[0].getSiblings().forEach(chatComponent -> siblings.add(chatComponent.setParent(this)));
-		else
-			Arrays.asList(chatComponents).forEach(chatComponent -> siblings.add(chatComponent.setParent(this)));
+		if (chatComponents.length == 1 && !chatComponents[0].getSiblings().isEmpty()) {
+			chatComponents[0].getSiblings().forEach(
+					chatComponent -> siblings.add(chatComponent.setParent(this)));
+		} else {
+			Arrays.asList(chatComponents).forEach(
+					chatComponent -> siblings.add(chatComponent.setParent(this)));
+		}
 		return this;
 	}
 
 	public ChatComponent append(IChatComponent... chatComponents) {
-		if (chatComponents.length == 1 && !chatComponents[0].getSiblings().isEmpty())
-			chatComponents[0].getSiblings().forEach(chatComponent -> siblings.add(new ChatComponent(chatComponent, true).setParent(this)));
-		else
-			Arrays.asList(chatComponents).forEach(chatComponent -> siblings.add(new ChatComponent(chatComponent, true).setParent(this)));
+		if (chatComponents.length == 1 && !chatComponents[0].getSiblings().isEmpty()) {
+			chatComponents[0].getSiblings().forEach(
+					chatComponent -> siblings.add(new ChatComponent(chatComponent, true).setParent(this)));
+		} else {
+			Arrays.asList(chatComponents).forEach(
+					chatComponent -> siblings.add(new ChatComponent(chatComponent, true).setParent(this)));
+		}
 		return this;
 	}
 
@@ -136,30 +140,97 @@ public class ChatComponent {
 		return this;
 	}
 
-	public ChatComponent setParent(ChatComponent chatComponent) {
-		parent = chatComponent;
-		sibling = true;
-		return this;
-	}
-
 	public IChatComponent create() {
-		IChatComponent build = new ChatComponentText((JumpingAddon.getInstance().getStringUtils().repeatLastColor(sibling ? formattedText : "").replace("[%prefix$$]", JumpingAddon.getInstance().getSettings().getPrefix()))).setChatStyle(new ChatStyle());
+		IChatComponent build = new ChatComponentText(
+				(StringUtil.repeatLastColor(sibling ? formattedText : "")
+						.replace("[%prefix$$]", StringUtil.PREFIX))).setChatStyle(new ChatStyle());
 		if (sibling) {
-			if (clickEvent)
+			if (clickEvent) {
 				build.getChatStyle().setChatClickEvent(new ClickEvent(clickEventAction, clickEventValue));
-			if (hoverEvent)
-				build.getChatStyle().setChatHoverEvent(new HoverEvent(hoverEventAction, new ChatComponentText(hoverEventValue)));
+			}
+			if (hoverEvent) {
+				build.getChatStyle().setChatHoverEvent(
+						new HoverEvent(hoverEventAction, new ChatComponentText(hoverEventValue)));
+			}
 		} else {
 			if (byText) {
-				IChatComponent chatComponent = new ChatComponentText(JumpingAddon.getInstance().getStringUtils().repeatLastColor(formattedText.replace("[%prefix$$]", JumpingAddon.getInstance().getSettings().getPrefix()))).setChatStyle(new ChatStyle());
-				if (clickEvent)
-					chatComponent.getChatStyle().setChatClickEvent(new ClickEvent(clickEventAction, clickEventValue));
-				if (hoverEvent)
-					chatComponent.getChatStyle().setChatHoverEvent(new HoverEvent(hoverEventAction, new ChatComponentText(hoverEventValue)));
+				IChatComponent chatComponent = new ChatComponentText(StringUtil.repeatLastColor(
+						formattedText.replace("[%prefix$$]", StringUtil.PREFIX))).setChatStyle(new ChatStyle());
+				if (clickEvent) {
+					chatComponent.getChatStyle().setChatClickEvent(
+							new ClickEvent(clickEventAction, clickEventValue));
+				}
+				if (hoverEvent) {
+					chatComponent.getChatStyle().setChatHoverEvent(
+							new HoverEvent(hoverEventAction, new ChatComponentText(hoverEventValue)));
+				}
 				build.appendSibling(chatComponent);
 			}
 			siblings.forEach(siblings -> build.appendSibling(siblings.create()));
 		}
 		return build;
+	}
+
+	public String getFormattedText() {
+		return this.formattedText;
+	}
+
+	public String getUnformattedText() {
+		return this.unformattedText;
+	}
+
+	public HoverEvent.Action getHoverEventAction() {
+		return this.hoverEventAction;
+	}
+
+	public String getHoverEventValue() {
+		return this.hoverEventValue;
+	}
+
+	public ClickEvent.Action getClickEventAction() {
+		return this.clickEventAction;
+	}
+
+	public String getClickEventValue() {
+		return this.clickEventValue;
+	}
+
+	public boolean isHoverEvent() {
+		return this.hoverEvent;
+	}
+
+	public boolean isClickEvent() {
+		return this.clickEvent;
+	}
+
+	public boolean isByText() {
+		return this.byText;
+	}
+
+	public boolean isSibling() {
+		return this.sibling;
+	}
+
+	public boolean isPrefix() {
+		return this.prefix;
+	}
+
+	public ChatComponent setPrefix(boolean value) {
+		prefix = value;
+		return this;
+	}
+
+	public List<ChatComponent> getSiblings() {
+		return this.siblings;
+	}
+
+	public ChatComponent getParent() {
+		return this.parent;
+	}
+
+	public ChatComponent setParent(ChatComponent chatComponent) {
+		parent = chatComponent;
+		sibling = true;
+		return this;
 	}
 }

@@ -16,13 +16,17 @@ import java.util.Arrays;
 
 public class BetterStringElement implements BetterElement {
 
-	private StringElement stringElement;
+	private final StringElement stringElement;
 
-	public BetterStringElement(String displayName, ControlElement.IconData iconData, String currentValue, Consumer<String> updateValue) {
-		stringElement = new StringElement(Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData, currentValue, updateValue);
+	public BetterStringElement(String displayName, ControlElement.IconData iconData,
+	                           String currentValue, Consumer<String> updateValue) {
+		stringElement = new StringElement(
+				Settings.SettingsCategory.getLastCategory().getColor() + displayName, iconData,
+				currentValue, updateValue);
 	}
 
-	public BetterStringElement(String displayName, ControlElement.IconData iconData, SettingValue settingValue) {
+	public BetterStringElement(String displayName, ControlElement.IconData iconData,
+	                           SettingValue settingValue) {
 		this(displayName, iconData, settingValue.getAsString(), string -> {
 			settingValue.setValue(string);
 			settingValue.getConfiguration().set(settingValue.getConfigPath(), string);
@@ -41,8 +45,9 @@ public class BetterStringElement implements BetterElement {
 	}
 
 	public BetterStringElement addSettings(Object... objects) {
-		if (objects.length == 0)
+		if (objects.length == 0) {
 			return this;
+		}
 		Arrays.stream(objects).forEach(object -> {
 			if (object instanceof BetterElement) {
 				stringElement.getSubSettings().add(((BetterElement) object).getElement());
