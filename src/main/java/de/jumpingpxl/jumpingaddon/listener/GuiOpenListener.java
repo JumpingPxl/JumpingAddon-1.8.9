@@ -4,10 +4,10 @@ import de.jumpingpxl.jumpingaddon.JumpingAddon;
 import de.jumpingpxl.jumpingaddon.util.gui.ModGuiSignSearch;
 import de.jumpingpxl.jumpingaddon.util.serversupport.Server;
 import net.labymod.core.LabyModCore;
-import net.labymod.core_implementation.mc18.gui.ModGuiMainMenu;
 import net.labymod.gui.GuiSignSearch;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
 import net.minecraft.tileentity.TileEntitySign;
@@ -40,7 +40,7 @@ public class GuiOpenListener {
 				Server.GOMMEHD_NET)) {
 			gui = new ModGuiSignSearch(jumpingAddon, null);
 		}
-		if ((gui instanceof ModGuiMainMenu || gui instanceof GuiMainMenu) && !ownSignRenderer) {
+		if ((gui instanceof GuiMainMenu || gui instanceof GuiConnecting) && !ownSignRenderer) {
 			Map mapSpecialRenderers = null;
 			try {
 				mapSpecialRenderers = (Map) ReflectionHelper.findField(TileEntityRendererDispatcher.class,

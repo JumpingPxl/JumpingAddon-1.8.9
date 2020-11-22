@@ -23,11 +23,11 @@ repositories {
 }
 
 dependencies {
-
+    implementation fileTree(dir: 'libs', include: '*.jar')
 }
 
 version = "1.0"
-group = "com.yourname.modid" 
+group = "com.yourname.modid"
 archivesBaseName = "modid"
 
 minecraft {
@@ -37,16 +37,17 @@ minecraft {
 }
 
 processResources {
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
 
 reobf {
     jar {

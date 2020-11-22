@@ -33,7 +33,7 @@ import java.util.List;
 
 public class JumpingAddon extends LabyModAddon {
 
-	private final double version = 1.4;
+	private final double version = 1.5;
 	private final File addonFolder = new File("LabyMod/", "JumpingAddon");
 	private final String minecraftVersion = "1.8.9";
 	private boolean debug;

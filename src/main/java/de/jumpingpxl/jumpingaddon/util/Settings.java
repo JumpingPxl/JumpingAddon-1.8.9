@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,7 +157,7 @@ public class Settings {
 					setStartupNotification(new ChatComponent(
 							"[%prefix$$]§cA new version is available. Download JumpingAddon v" + version).append(
 							new ChatComponent(" §4§lHERE").setClickEvent(ClickEvent.Action.OPEN_URL,
-									"https://nicomiddendorf.de/JumpingAddon_1-8-9.jar")));
+									"https://nicomiddendorf.de/jumpingaddon/JumpingAddon_1-8-9.jar")));
 				} else {
 					jumpingAddon.log("[JumpingAddon] No new version found.");
 				}
@@ -171,7 +172,7 @@ public class Settings {
 		InputStreamReader inputStreamReader;
 		try {
 			URLConnection urlConnection = new URL(
-					"https://nicomiddendorf.de/" + fileName).openConnection();
+					"https://nicomiddendorf.de/jumpingaddon/" + fileName).openConnection();
 			urlConnection.setRequestProperty("User-Agent", Source.getUserAgent());
 			urlConnection.setReadTimeout(5000);
 			urlConnection.setConnectTimeout(5000);
@@ -193,7 +194,12 @@ public class Settings {
 		while ((line = bufferedReader.readLine()) != null) {
 			contents.append(contents.toString().equals("") ? "" : "\n").append(line);
 		}
-		return (JsonObject) new JsonParser().parse(contents.toString());
+
+		String content = contents.toString();
+		content = content.replace("\\u003c", "<").replace("\u003c", "<");
+		content = content.replace("\\u003d", "=").replace("\u003d", "=");
+		System.out.println("GETFILE " + fileName + ";" + content.replace("\n", ""));
+		return (JsonObject) new JsonParser().parse(content);
 	}
 
 	public JsonObject getJsonObjectFromResource(String fileName) {
