@@ -103,17 +103,6 @@ public class JumpingAddon extends LabyModAddon {
 		settings.loadConfig();
 	}
 
-	public TileEntitySignRenderer getCustomSignRenderer() {
-		return new TileEntitySignRenderer() {
-			public void renderTileEntityAt(TileEntitySign tileEntitySign, double x, double y, double z,
-			                               float partialTicks, int destroyStage) {
-				eventHandler.getRenderSignListener().onRenderSign(tileEntitySign, x, y, z, partialTicks,
-						destroyStage);
-				super.renderTileEntityAt(tileEntitySign, x, y, z, partialTicks, destroyStage);
-			}
-		};
-	}
-
 	public JsonObject getLabyModConfig() {
 		return config;
 	}

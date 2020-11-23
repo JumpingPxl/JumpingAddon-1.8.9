@@ -25,7 +25,7 @@ public class ModuleHandler {
 		actionModule = new ActionModule(jumpingAddon);
 		discordRPCModule = new DiscordRPCModule(jumpingAddon);
 		hitBoxModule = new HitBoxModule(jumpingAddon);
-		signSearchModule = new SignSearchModule(jumpingAddon);
+		//signSearchModule = new SignSearchModule(jumpingAddon);
 		return this;
 	}
 

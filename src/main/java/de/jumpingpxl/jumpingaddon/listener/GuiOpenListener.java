@@ -7,9 +7,11 @@ import net.labymod.core.LabyModCore;
 import net.labymod.gui.GuiSignSearch;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -36,11 +38,12 @@ public class GuiOpenListener {
 	public void onGuiOpen(GuiOpenEvent event) {
 		GuiScreen gui = LabyModCore.getForge().getGuiOpenEventGui(event);
 		jumpingAddon.getSettings().setPreviousGui(jumpingAddon.getSettings().getCurrentGui());
-		if (gui instanceof GuiSignSearch && jumpingAddon.getConnection().isOnServer(
-				Server.GOMMEHD_NET)) {
-			gui = new ModGuiSignSearch(jumpingAddon, null);
-		}
-		if ((gui instanceof GuiMainMenu || gui instanceof GuiConnecting) && !ownSignRenderer) {
+//		if (gui instanceof GuiSignSearch && jumpingAddon.getConnection().isOnServer(
+//				Server.GOMMEHD_NET)) {
+//			gui = new ModGuiSignSearch(jumpingAddon, null);
+//		}
+
+/*		if ((gui instanceof GuiMainMenu || gui instanceof GuiConnecting) && !ownSignRenderer) {
 			Map mapSpecialRenderers = null;
 			try {
 				mapSpecialRenderers = (Map) ReflectionHelper.findField(TileEntityRendererDispatcher.class,
@@ -53,7 +56,8 @@ public class GuiOpenListener {
 			mapSpecialRenderers.put(TileEntitySign.class, tileEntitySignRendererCustom);
 			tileEntitySignRendererCustom.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			ownSignRenderer = true;
-		}
+		} */
+
 		LabyModCore.getForge().setGuiOpenEventGui(event, gui);
 		jumpingAddon.getSettings().setCurrentGui(gui);
 		if (jumpingAddon.isDebug()) {
